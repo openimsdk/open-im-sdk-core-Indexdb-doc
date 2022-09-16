@@ -17,7 +17,7 @@ CREATE TABLE `local_users` (`user_id` varchar(64),`name` varchar(255),`face_url`
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败 |如果获取不到用户信息也需要返回错误|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | object                                          | LocalUser（用户表对象数据） ||
+| data      | string                                          | LocalUser（用户表对象数据） |对象转换成string|
 
 - InsertLoginUser
   
