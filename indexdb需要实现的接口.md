@@ -19,7 +19,11 @@ CREATE TABLE `local_users` (`user_id` varchar(64),`name` varchar(255),`face_url`
 | errCode      | number                                         | 自定义即可，0成功，非0失败 |如果获取不到用户信息也需要返回错误|
 | errMsg     | string                                          | 详细的err信息 ||
 | data      | string                                          | LocalUser（用户表对象数据） |对象转换成string|
+**参考sql语句说明：**
 
+```sql
+SELECT * FROM `local_users` WHERE user_id = "3045326383"  LIMIT 1;
+```
 - insertLoginUser
   
 | 输入参数     | 类型                                                         | 说明 |备注|
@@ -31,7 +35,12 @@ CREATE TABLE `local_users` (`user_id` varchar(64),`name` varchar(255),`face_url`
 | errCode      | number                                         | 自定义即可，0成功，非0失败 ||
 | errMsg     | string                                          | 详细的err信息 ||
 | data      | string                                          | 可为"" ||
-   
+**参考sql语句说明：**
+
+```sql
+INSERT INTO `local_users` (`user_id`,`name`,`face_url`,`gender`,`phone_number`,`birth`,`email`,`create_time`,`app_manger_level`,`ex`,`attached_info`,`global_recv_msg_opt`) VALUES ("3045326383","Gordon","ic_avatar_01",0,"18349115126",0," ",0,1,"","",0)
+
+```
 - updateLoginUserByMap
   
 | 输入参数     | 类型                                                         | 说明 |备注|
@@ -44,7 +53,12 @@ CREATE TABLE `local_users` (`user_id` varchar(64),`name` varchar(255),`face_url`
 | errCode      | number                                         | 自定义即可，0成功，非0失败|如果没有更新到一行，需要返回失败|
 | errMsg     | string                                          | 详细的err信息 ||
 | data      | string                                          | 可为""  ||
-   
+**参考sql语句说明：**
+
+```sql
+
+```
+
 
 ### 2.消息表(写扩散消息表)
 - 表名：local_chat_logs
@@ -72,6 +86,13 @@ CREATE TABLE `local_chat_logs` (`client_msg_id` char(64),`server_msg_id` char(64
 | errCode      | number                                         | 自定义即可，0成功，非0失败 |如果获取不到消息也需要返回错误|
 | errMsg     | string                                          | 详细的err信息 ||
 | data      | string                                          | LocalChatLog（消息表对象数据） |对象转换成string|
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `local_chat_logs` WHERE client_msg_id = "063031b86f8e503c6038efb2b835f216" LIMIT 1
+
+```
+
 
 [comment]: <> (- setChatLogFailedStatus)
 - getSendingMessageList
