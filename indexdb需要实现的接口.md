@@ -159,9 +159,27 @@ SELECT IFNULL(max(seq),0) FROM `local_chat_logs`;
 ```
 
 BatchUpdateMessageList
-UpdateMessage
 
- UPDATE `local_chat_logs` SET `server_msg_id`="8c6dc2ace8ff5706880018de43916c39",`recv_id`="2041671273",`session_type`=1,`status`=2,`seq`=14 WHERE `client_msg_id` = "6edad80249cc0cf626edb88e64f8fb6d"
+- updateMessage
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| clientMsgID | string                                     | 客户端消息ID       ||
+| args        | object | 更新字段参数对象 |内部是kv，k为字段名，v为需要更新的字段内容Js实现db接口简要说明|
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |如果没更新到任何一行消息也返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | 可为"" ||
+
+**参考sql语句说明：**
+
+```sql
+ UPDATE `local_chat_logs` SET `server_msg_id`="8c6dc2ace8ff5706880018de43916c39",`recv_id`="2041671273",`session_type`=1,`status`=2,`seq`=14 WHERE `client_msg_id` = "6edad80249cc0cf626edb88e64f8fb6d";
+```
+
+
 
 BatchInsertMessageList
 
