@@ -103,3 +103,25 @@ SELECT * FROM `local_conversations` WHERE latest_msg_send_time = 0;
 ```sql
  UPDATE `local_conversations` SET `latest_msg`="{\"clientMsgID\":\"985261c57242cf647753839854038154\",\"createTime\":1663658950833,\"sendTime\":1663658950833,\"sessionType\":1,\"sendID\":\"3045326383\",\"recvID\":\"2041671273\",\"msgFrom\":100,\"contentType\":101,\"platformID\":1,\"senderNickname\":\"Gordon111\",\"senderFaceUrl\":\"ic_avatar_01\",\"content\":\"Single chat test3045326383:2041671273:\",\"seq\":0,\"isRead\":false,\"status\":1,\"offlinePush\":{},\"pictureElem\":{\"sourcePicture\":{\"size\":0,\"width\":0,\"height\":0},\"bigPicture\":{\"size\":0,\"width\":0,\"height\":0},\"snapshotPicture\":{\"size\":0,\"width\":0,\"height\":0}},\"soundElem\":{\"dataSize\":0,\"duration\":0},\"videoElem\":{\"videoSize\":0,\"duration\":0,\"snapshotSize\":0,\"snapshotWidth\":0,\"snapshotHeight\":0},\"fileElem\":{\"fileSize\":0},\"mergeElem\":{},\"atElem\":{\"isAtSelf\":false},\"faceElem\":{\"index\":0},\"locationElem\":{\"longitude\":0,\"latitude\":0},\"customElem\":{},\"quoteElem\":{},\"notificationElem\":{},\"messageEntityElem\":{},\"attachedInfoElem\":{\"groupHasReadInfo\":{\"hasReadCount\":0,\"groupMemberCount\":0},\"isPrivateChat\":false,\"hasReadTime\":0,\"notSenderNotificationPush\":false,\"isEncryption\":false,\"inEncryptStatus\":false}}",`latest_msg_send_time`=1663658950833 WHERE `conversation_id` = "single_2041671273";
 ```
+
+- decrConversationUnreadCount
+>注：该函数需要用到事务，未读数减去后，需要读取一次该会话的未读数（SELECT * FROM `local_conversations` WHERE conversation_id = "single_2992126880" AND `local_conversations`.`conversation_id` = "single_2992126880" LIMIT 1
+），如果该会话未读数<0,需要回滚并返回错误
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| conversationID     |string                                       | 会话ID ||
+| count     |number                                       |  会话未读数减去数量 ||
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败||
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | 可为""  ||
+
+**参考sql语句说明：**
+
+```sql
+ UPDATE `local_conversations` SET `unread_count`=unread_count-3 WHERE `conversation_id` = "single_2992126880";
+```
+
