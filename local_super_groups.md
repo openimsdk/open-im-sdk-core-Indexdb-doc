@@ -9,9 +9,90 @@ CREATE TABLE `local_super_groups` (`group_id` varchar(64),`name` text,`notificat
 
 
 #### 接口说明：
-GetJoinedSuperGroupList
-InsertSuperGroup
-UpdateSuperGroup
-DeleteSuperGroup
-GetReadDiffusionGroupIDList
-GetSuperGroupInfoByGroupID
+
+- getJoinedSuperGroupList
+
+**无输入参数**
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | LocalGroup（大群表对象数组） |对象转换成string|
+
+**参考sql语句说明：**
+
+```sql
+ SELECT * FROM `local_super_groups`;
+```
+
+- insertSuperGroup
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupInfo                                               | string  |LocalGroup（大群表对象数据）|对象转换成string
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | 可为"" ||
+**参考sql语句说明：**
+
+```sql
+INSERT INTO `local_super_groups` (`group_id`,`name`,`notification`,`introduction`,`face_url`,`create_time`,`status`,`creator_user_id`,`group_type`,`owner_user_id`,`member_count`,`ex`,`attached_info`,`need_verification`,`look_member_info`,`apply_member_friend`,`notification_update_time`,`notification_user_id`) VALUES ("1225056077","普通","","","",1664348422,0,"4137580800",0,"4137580800",2,"","",0,0,0,0,"");
+```
+
+- updateSuperGroup
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID     |string                                       |  大群群ID ||
+| args     |object                                       |  更新字段参数对象 |内部是kv，k为字段名，v为需要更新的字段内容|
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败|如果没有更新到一行，需要返回失败|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | 可为""  ||
+**参考sql语句说明：**
+
+```sql
+UPDATE `local_super_groups` SET `group_id`="4280368097",`name`="工作群测试111",`notification`="",`introduction`="",`face_url`="",`create_time`=1664447111,`s`=0,`creator_user_id`="3359303407",`group_type`=2,`owner_user_id`="3359303407",`member_count`=2,`ex`="",`attached_info`="",`need_verification`=0,`look_member_info`=0,`apply_member_friend`=0,`notification_update_time`=0,`notification_user_id`="" WHERE `group_id` = "4280368097";
+```
+
+- deleteSuperGroup
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID     |string                                       |  大群群ID ||
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败||
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | 可为""  ||
+**参考sql语句说明：**
+
+```sql
+DELETE FROM `local_super_groups` WHERE `local_groups`.`group_id` = "4280368097";
+```
+
+- getSuperGroupInfoByGroupID
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID      | string                                          | 大群群ID ||
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |如果获取不到大群信息也需要返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | LocalGroup（大群表对象数据） |对象转换成string|
+
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `local_super_groups` WHERE group_id = "3045326383"  LIMIT 1;
+```

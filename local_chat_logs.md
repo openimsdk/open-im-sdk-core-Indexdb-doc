@@ -155,4 +155,23 @@ BatchUpdateMessageList
  INSERT INTO `local_chat_logs` (`client_msg_id`,`server_msg_id`,`send_id`,`recv_id`,`sender_platform_id`,`sender_nick_name`,`sender_face_url`,`session_type`,`msg_from`,`content_type`,`content`,`is_read`,`status`,`seq`,`send_time`,`create_time`,`attached_info`,`ex`) VALUES ("6edad80249cc0cf626edb88e64f8fb6d","","3045326383","2041671273",1,"Gordon111","ic_avatar_01",1,100,101,"Single chat test3045326383:2041671273:",false,1,0,1663658716992,1663658716992,"","");
 ```
 
-GetMultipleMessage
+
+- getMultipleMessage
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| msgIDList                                     | string  | 消息ID列表|对象转换成string
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | 可为"" ||
+
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e63394b856b8a781ef0234b49","00da0b5471f0bca5a41c92e09419f9dc") ORDER BY send_time DESC;
+```
+
+
