@@ -212,7 +212,24 @@ SELECT * FROM `local_sg_chat_logs_812146266` WHERE recv_id = "812146266" AND sta
 SELECT * FROM `local_sg_chat_logs_812146266` WHERE  recv_id = "812146266" AND status <=3 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
 -- 注：其中status固定为3
 ```
+- superGroupGetNormalMinSeq
 
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID | string                                     | 群ID       ||
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | number                                    | 大群消息表中最小seq ||
+
+**参考sql语句说明：**
+
+```sql
+SELECT IFNULL(min(seq),0) FROM `local_sg_chat_logs_812146266` WHERE seq >0;
+```
 
 
 
