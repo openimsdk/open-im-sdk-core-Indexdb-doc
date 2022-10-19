@@ -162,7 +162,56 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 ```
 
 
+- SuperGroupGetMessageListNoTime
 
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID                                     | string  | 群ID|
+| sessionType | number                                     | 会话类型，单聊1、读扩散群2、大群为3      ||
+| count | number | 获取消息的数量 ||
+| isReverse | boolean | 消息为正向拉取还是反向拉取|默认情况为false，即为正向拉取（从新消息到老消息），order by 后面的排序规则为send_time DESC 降序排列，当为true的情况，即为反向拉取，order by 后面的排序规则为send_time ASC 升序排列|
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | []LocalSuperGroupChatLogs（会话表对象数组数据） ||
+
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `local_sg_chat_logs_812146266` WHERE recv_id = "812146266" AND status <=3 And session_type = 3  ORDER BY send_time DESC LIMIT 30;
+-- 注：其中status固定为3
+-- 	MsgStatusSending     = 1
+-- 	MsgStatusSendSuccess = 2
+-- 	MsgStatusSendFailed  = 3
+-- 	MsgStatusHasDeleted  = 4
+-- 	MsgStatusRevoked     = 5
+-- 	MsgStatusFiltered    = 6
+```
+
+- SuperGroupGetMessageList
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID                                     | string  | 群ID|
+| sessionType | number                                     | 会话类型，单聊1、读扩散群2、大群为3      ||
+| count | number | 获取消息的数量 ||
+| startTime | number | 消息发送时间，毫秒 ||
+| isReverse | boolean | 消息为正向拉取还是反向拉取|默认情况为false，即为正向拉取（从新消息到老消息），order by 后面的排序规则为send_time DESC 降序排列，send_time为 <;当为true的情况，即为反向拉取，order by 后面的排序规则为send_time ASC 升序排列,send_time为 >|
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | []LocalSuperGroupChatLogs（会话表对象数组数据） ||
+
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `local_sg_chat_logs_812146266` WHERE  recv_id = "812146266" AND status <=3 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
+-- 注：其中status固定为3
+```
 
 
 
