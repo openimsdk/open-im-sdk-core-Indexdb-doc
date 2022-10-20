@@ -175,7 +175,7 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | []LocalSuperGroupChatLogs（会话表对象数组数据） ||
+| data      | string                                          | []LocalSuperGroupChatLogs（大群表对象数组数据） ||
 
 **参考sql语句说明：**
 
@@ -204,7 +204,7 @@ SELECT * FROM `local_sg_chat_logs_812146266` WHERE recv_id = "812146266" AND sta
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | []LocalSuperGroupChatLogs（会话表对象数组数据） ||
+| data      | string                                          | []LocalSuperGroupChatLogs（大群表对象数组数据） ||
 
 **参考sql语句说明：**
 
