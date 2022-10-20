@@ -53,10 +53,10 @@ SELECT * FROM `local_chat_logs` WHERE client_msg_id = "063031b86f8e503c6038efb2b
 
 ```sql
 -- 1、sessionType == 1 && sourceID == d.loginUserID
-SELECT * FROM `local_sg_chat_logs_812146266` WHERE send_id = "812146266" And  recv_id = "812146266" AND status <=1 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" And  recv_id = "812146266" AND status <=1 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
 -- 注：其中status固定为3
 -- 2、其他场景
-SELECT * FROM `local_sg_chat_logs_812146266` WHERE send_id = "812146266" OR  recv_id = "812146266" AND status <=1 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" OR  recv_id = "812146266" AND status <=1 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
 ```
 - getMessageListNoTime
 
@@ -77,10 +77,10 @@ SELECT * FROM `local_sg_chat_logs_812146266` WHERE send_id = "812146266" OR  rec
 
 ```sql
 -- 1、sessionType == 1 && sourceID == d.loginUserID
-SELECT * FROM `local_sg_chat_logs_812146266` WHERE send_id = "812146266" And  recv_id = "812146266" AND status <=3 And session_type = 1  ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" And  recv_id = "812146266" AND status <=3 And session_type = 1  ORDER BY send_time DESC LIMIT 30;
 -- 注：其中status固定为3
 -- 2、其他场景
-SELECT * FROM `local_sg_chat_logs_812146266` WHERE send_id = "812146266" OR  recv_id = "812146266" AND status <=3 And session_type = 1  ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" OR  recv_id = "812146266" AND status <=3 And session_type = 1  ORDER BY send_time DESC LIMIT 30;
 ```
 
 [comment]: <> "- setChatLogFailedStatus"
