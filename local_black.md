@@ -46,11 +46,11 @@ FROM `local_blacks`
 
 **无输入参数**
 
-| 返回参数    | 类型     | 说明             | 备注  |
-|---------|--------|----------------|-----|
-| errCode | number | 自定义即可，0成功，非0失败 |     |
-| errMsg  | string | 详细的err信息       |     |
-| data    | string | []LocalBlack  （表对象数据） |对象转换成string|
+| 返回参数    | 类型     | 说明                | 备注  |
+|---------|--------|-------------------|-----|
+| errCode | number | 自定义即可，0成功，非0失败    |     |
+| errMsg  | string | 详细的err信息          |     |
+| data    | string | []string  （表对象数据） |对象转换成string|
 
 ```sqlite
 SELECT `block_user_id`
