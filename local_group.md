@@ -4,7 +4,7 @@
 
 > 所有的db接口返回值，统一由errCode,errMsg,data字段转换为字符串异步返回
 
-### XX表
+### 群组表
 
 - 表名：local_groups
 
