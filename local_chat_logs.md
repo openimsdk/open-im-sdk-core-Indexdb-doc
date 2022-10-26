@@ -42,6 +42,7 @@ SELECT * FROM `local_chat_logs` WHERE client_msg_id = "063031b86f8e503c6038efb2b
 | count | number | 获取消息的数量 ||
 | startTime | number | 消息发送时间，毫秒 ||
 | isReverse | boolean | 消息为正向拉取还是反向拉取|默认情况为false，即为正向拉取（从新消息到老消息），order by 后面的排序规则为send_time DESC 降序排列，send_time为 <;当为true的情况，即为反向拉取，order by 后面的排序规则为send_time ASC 升序排列,send_time为 >|
+| loginUserID | string | 用户登录ID |需要根据会话的类型和sourceID判断，当sessionType为1并且sourceID为登录者ID时候，搜索sql为 AND|
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -66,6 +67,7 @@ SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" OR  recv_id = "81214
 | sessionType | number                                     | 会话类型，单聊1、读扩散群2、大群为3      ||
 | count | number | 获取消息的数量 ||
 | isReverse | boolean | 消息为正向拉取还是反向拉取|默认情况为false，即为正向拉取（从新消息到老消息），order by 后面的排序规则为send_time DESC 降序排列，当为true的情况，即为反向拉取，order by 后面的排序规则为send_time ASC 升序排列|
+| loginUserID | string | 用户登录ID |需要根据会话的类型和sourceID判断，当sessionType为1并且sourceID为登录者ID时候，搜索sql为 AND|
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
