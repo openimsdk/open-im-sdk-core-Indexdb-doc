@@ -602,3 +602,53 @@ SELECT `seq` FROM `local_err_chat_logs`
  INSERT INTO `local_err_chat_logs` (`client_msg_id`,`server_msg_id`,`send_id`,`recv_id`,`sender_platform_id`,`sender_nick_name`,`sender_face_url`,`session_type`,`msg_from`,`content_type`,`content`,`is_read`,`status`,`send_time`,`create_time`,`attached_info`,`ex`,`seq`) VALUES ("1","1","1","1",0,"1","1",0,0,0,"",false,0,0,0,"","",1) RETURNING `seq`
 ```
 
+
+- deleteAllMessage
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | []uint32                                          |  没有返回空列表|
+
+```sql
+UPDATE `local_chat_logs` SET `content`="",`status`=4
+```
+
+
+- getAllUnDeleteMessageSeqList
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | []uint32                                          |  没有返回空列表|
+
+```sql
+SELECT `seq` FROM `local_chat_logs` WHERE status != 4
+```
+
+
+- updateSingleMessageHasRead
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| sendID | string | |
+| msgIDList | []string | |
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | []uint32                                          |  没有返回空列表|
+
+```sql
+UPDATE `local_chat_logs` SET `is_read`=1 WHERE send_id="s"  AND session_type=1 AND client_msg_id in ("sss")
+```
