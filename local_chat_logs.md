@@ -652,3 +652,92 @@ SELECT `seq` FROM `local_chat_logs` WHERE status != 4
 ```sql
 UPDATE `local_chat_logs` SET `is_read`=1 WHERE send_id="s"  AND session_type=1 AND client_msg_id in ("sss")
 ```
+
+- addMemberCount
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID | string | |
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | number                                          |  |
+
+```sql
+UPDATE `local_groups` SET `member_count`=member_count+1 WHERE `group_id` = "s"
+```
+
+- updateGroupMessageHasRead
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| sessionType | number | |
+| msgIDList | []string | |
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | number                                          |  |
+
+```sql
+UPDATE `local_chat_logs` SET `is_read`=1 WHERE session_type=3 AND client_msg_id in ("12","ds")
+```
+
+- subtractMemberCount
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID | string | |
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | number                                          |  |
+
+```sql
+UPDATE `local_groups` SET `member_count`=member_count-1 WHERE `group_id` = "groupID"
+```
+ 
+- getJoinedWorkingGroupIDList
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | number                                          |  |
+
+
+
+```sql
+SELECT * FROM `local_groups`
+找出groupType为2的groupID
+```
+
+
+- getJoinedWorkingGroupList
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | number           
+
+```sql
+ SELECT * FROM `local_groups`
+找出groupType为2的群对象返回
+```
