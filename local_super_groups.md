@@ -96,3 +96,70 @@ DELETE FROM `local_super_groups` WHERE `local_groups`.`group_id` = "4280368097";
 ```sql
 SELECT * FROM `local_super_groups` WHERE group_id = "3045326383"  LIMIT 1;
 ```
+
+- deleteAllSuperGroup
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败||
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | 可为""  ||
+**参考sql语句说明：**
+
+```sql
+DELETE FROM `local_super_groups`
+```
+
+- superGroupSearchMessageByKeyword
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| contentType                                     | []int  | 消息类型| 
+| keywordList | []string | 关键字列表 |
+| keywordListMatchType | int | 关键字匹配类型 |
+| sourceID | string | 0为or匹配, 1为and匹配 | 来源id 可以为用户 大群 群id
+| startTime | int | 开始时间戳 |
+| endTime | int | 结束时间戳 |
+| sessionType | int | 会话类型 |
+| offset | int | 偏移数 | 
+| count | int | 获取总数 |
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | 可为"", 搜索数据 ||
+
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `local_sg_chat_logs_748402675` WHERE recv_id="748402675" And send_time between 0 and 1666767397000 AND status <=3  And content_type IN (101,106) And (content like '%d%')  ORDER BY send_time DESC LIMIT 20
+```
+
+- superGroupSearchMessageByContentType
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| contentType                                     | []int  | 消息类型| 
+| sourceID | string | 0为or匹配, 1为and匹配 | 来源id 可以为用户 大群 群id
+| startTime | int | 开始时间戳 |
+| endTime | int | 结束时间戳 |
+| sessionType | int | 会话类型 | supergroup填3
+| offset | int | 偏移数 | 
+| count | int | 获取总数 |
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | 可为"", 搜索数据 ||
+
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `local_sg_chat_logs_748402675` WHERE session_type=3 And recv_id=="748402675" And send_time between 0 and 1666768501000 AND status <=3 And content_type IN (101,106) ORDER BY send_time DESC LIMIT 20
+```
