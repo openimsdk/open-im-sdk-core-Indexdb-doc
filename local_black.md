@@ -57,25 +57,6 @@ SELECT `block_user_id`
 FROM `local_blacks`
 ```
 
-- getFriendInfoByFriendUserID
-
-| 输入参数              | 类型     | 说明  | 备注  |
-|-------------------|--------|-----|-----|
-| blockUserID      | string |     |     |
-
-| 返回参数    | 类型     | 说明             | 备注  |
-|---------|--------|----------------|-----|
-| errCode | number | 自定义即可，0成功，非0失败 |     |
-| errMsg  | string | 详细的err信息       |     |
-| data    | string | LocalGroup  （表对象数据） |对象转换成string|
-
-```sqlite
-SELECT *
-FROM `local_blacks`
-WHERE owner_user_id = "3433303585"
-  AND block_user_id = "123"
-LIMIT 1
-```
 
 - getBlackInfoList
 
