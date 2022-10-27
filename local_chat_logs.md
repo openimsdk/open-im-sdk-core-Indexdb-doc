@@ -251,31 +251,7 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 ```
 
 
-- superGroupSearchMessageByKeyword
 
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| contentType                                     | []int  | 消息类型| 
-| keywordList | []string | 关键字列表 |
-| keywordListMatchType | int | 关键字匹配类型 |
-| sourceID | string | 0为or匹配, 1为and匹配 | 来源id 可以为用户 大群 群id
-| startTime | int | 开始时间戳 |
-| endTime | int | 结束时间戳 |
-| sessionType | int | 会话类型 |
-| offset | int | 偏移数 | 
-| count | int | 获取总数 |
-
-| 返回参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
-| errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"", 搜索数据 ||
-
-**参考sql语句说明：**
-
-```sql
-SELECT * FROM `local_sg_chat_logs_748402675` WHERE recv_id="748402675" And send_time between 0 and 1666767397000 AND status <=3  And content_type IN (101,106) And (content like '%d%')  ORDER BY send_time DESC LIMIT 20
-```
 
 - searchMessageByContentType
 
@@ -302,29 +278,7 @@ SELECT * FROM `local_chat_logs` WHERE session_type==1 And (send_id=="3433303585"
 ```
 
 
-- superGroupSearchMessageByContentType
 
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| contentType                                     | []int  | 消息类型| 
-| sourceID | string | 0为or匹配, 1为and匹配 | 来源id 可以为用户 大群 群id
-| startTime | int | 开始时间戳 |
-| endTime | int | 结束时间戳 |
-| sessionType | int | 会话类型 | supergroup填3
-| offset | int | 偏移数 | 
-| count | int | 获取总数 |
-
-| 返回参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
-| errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"", 搜索数据 ||
-
-**参考sql语句说明：**
-
-```sql
-SELECT * FROM `local_sg_chat_logs_748402675` WHERE session_type=3 And recv_id=="748402675" And send_time between 0 and 1666768501000 AND status <=3 And content_type IN (101,106) ORDER BY send_time DESC LIMIT 20
-```
 
 - searchMessageByContentTypeAndKeyword
 
@@ -357,7 +311,7 @@ SELECT * FROM `local_chat_logs` WHERE send_time between 0 and 1666769211000 AND 
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
 | errMsg     | string                                          | 详细的err信息 |
 | data      | bool                                          | 是否存在 |
 
@@ -375,7 +329,7 @@ SELECT count(*) FROM `local_chat_logs` WHERE client_msg_id == "xxx";
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
 | errMsg     | string                                          | 详细的err信息 |
 | data      | bool                                          | 是否存在 |
 
@@ -389,7 +343,7 @@ SELECT count(*) FROM `local_err_chat_logs` WHERE seq == 1;
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| clientMsgID                                     | string  | id| 
+| seq                                     | uint32  | id| 
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -411,7 +365,7 @@ SELECT count(*) FROM `local_chat_logs` WHERE seq == 1;
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
 | errMsg     | string                                          | 详细的err信息 |
 | data      | string                                          | 可为"" |
 
@@ -436,5 +390,215 @@ UPDATE `local_chat_logs` SET `is_read`=1 WHERE session_type=2 AND client_msg_id 
 **参考sql语句说明：**
 ```sql
 SELECT * FROM `local_chat_logs` WHERE client_msg_id IN ("a43fe26849cf4f9225262297967979f1") ORDER BY send_time DESC
+```
+
+- updateMsgSenderNickname
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| sendID                                     | string  |  |
+| nickname | string |  |
+| sType | int | sessionType
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | string                                          | 可为"" |
+
+**参考sql语句说明：**
+```sql
+UPDATE `local_chat_logs` SET `sender_nick_name`="xx" WHERE send_id = "ss" and session_type = 1 and sender_nick_name != "xx"
+```
+
+- updateMsgSenderFaceURL
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| sendID                                     | string  |  |
+| faceURL | string |  |
+| sType | int | sessionType
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | string                                          | 可为"" |
+
+**参考sql语句说明：**
+```sql
+UPDATE `local_chat_logs` SET `sender_face_url`="xx" WHERE send_id = "ss" and session_type = 1 and sender_face_url != "xx"
+```
+
+- updateMsgSenderFaceURLAndSenderNickname
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| sendID                                     | string  |  |
+| faceURL | string |  |
+| nickname | string |  |
+| sType | int | sessionType
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | string                                          | 可为"" |
+
+**参考sql语句说明：**
+```sql
+UPDATE `local_chat_logs` SET `sender_face_url`="xx",`sender_nick_name`="" WHERE send_id = "ss" and session_type = 1
+```
+
+
+- getMsgSeqByClientMsgID
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| clientMsgID                                     | string  | id| 
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 | 获取不到报错|
+| errMsg     | string                                          | 详细的err信息 |
+| data      | uint32                                          | uint32 |
+
+**参考sql语句说明：**
+
+```sql
+SELECT `seq` FROM `local_chat_logs` WHERE client_msg_id="ss" ORDER BY `local_chat_logs`.`client_msg_id` LIMIT 1
+```
+
+- getMsgSeqListByGroupID
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID                                     | string  | id| 
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 |
+| data      | []uint32                                          |  |
+
+**参考sql语句说明：**
+
+```sql
+SELECT `seq` FROM `local_chat_logs` WHERE recv_id="ss"
+```
+
+
+- getMsgSeqListByPeerUserID
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| userID                                     | string  | id| 
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 |
+| data      | []uint32                                          |  |
+
+**参考sql语句说明：**
+
+```sql
+SELECT `seq` FROM `local_chat_logs` WHERE recv_id="ss" or send_id="ss"
+```
+
+- getMsgSeqListBySelfUserID
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| userID                                     | string  | id| 
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 |
+| data      | []uint32                                          |  |
+
+**参考sql语句说明：**
+
+```sql
+    SELECT `seq` FROM `local_chat_logs` WHERE recv_id="ss" and send_id="ss"
+```
+
+local_err_chat_logs表
+```sql
+CREATE TABLE "local_err_chat_logs" (
+  "seq" integer,
+  "client_msg_id" char(64),
+  "server_msg_id" char(64),
+  "send_id" char(64),
+  "recv_id" char(64),
+  "sender_platform_id" integer,
+  "sender_nick_name" varchar(255),
+  "sender_face_url" varchar(255),
+  "session_type" integer,
+  "msg_from" integer,
+  "content_type" integer,
+  "content" varchar(1000),
+  "is_read" numeric,
+  "status" integer,
+  "send_time" integer,
+  "create_time" integer,
+  "attached_info" varchar(1024),
+  "ex" varchar(1024),
+  PRIMARY KEY ("seq")
+);
+
+```
+
+- getAbnormalMsgSeq
+
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 |
+| data      | uint32                                          |  |
+
+```sql
+SELECT IFNULL(max(seq),0) FROM `local_err_chat_logs`
+```
+
+
+- getAbnormalMsgSeqList
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 |
+| data      | []uint32                                          |  没有返回空列表|
+
+```sql
+SELECT `seq` FROM `local_err_chat_logs`
+```
+
+- batchInsertExceptionMsg
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| messageList | []LocalErrChatLog | |
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 |
+| data      | []uint32                                          |  没有返回空列表| 
+
+
+```sql
+ INSERT INTO `local_err_chat_logs` (`client_msg_id`,`server_msg_id`,`send_id`,`recv_id`,`sender_platform_id`,`sender_nick_name`,`sender_face_url`,`session_type`,`msg_from`,`content_type`,`content`,`is_read`,`status`,`send_time`,`create_time`,`attached_info`,`ex`,`seq`) VALUES ("1","1","1","1",0,"1","1",0,0,0,"",false,0,0,0,"","",1) RETURNING `seq`
 ```
 
