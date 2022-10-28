@@ -58,6 +58,8 @@ VALUES ("123", "456", "hello", 1666778999, 0, "789", "hhhh", "", 1, "13000000000
 | 输入参数     | 类型     | 说明  | 备注  |
 | --------- |--------|-----|-----|
 |friendUserID| string |     |     |
+|ownerUserID| string | | |
+
 
 | 返回参数     | 类型            | 说明 | 备注  |
 | --------- | ------------ | ----- |-----|
@@ -65,9 +67,7 @@ VALUES ("123", "456", "hello", 1666778999, 0, "789", "hhhh", "", 1, "13000000000
 | errMsg     | string     | 详细的err信息 |     |
 
 ```sqlite
-DELETE
-FROM `local_groups`
-WHERE `local_groups`.`group_id` = "1234"
+DELETE FROM `local_friends` WHERE owner_user_id="3433303585" and friend_user_id="x"
 ```
 
 - updateFriend
@@ -146,6 +146,7 @@ ORDER BY create_time DESC
 | 输入参数              | 类型     | 说明  | 备注  |
 |-------------------|--------|-----|-----|
 | friendUserID      | string |     |     |
+| ownerUserID | string | | |
 
 | 返回参数    | 类型     | 说明             | 备注  |
 |---------|--------|----------------|-----|
