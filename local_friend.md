@@ -103,6 +103,10 @@ WHERE `owner_user_id` = "123"
 
 - getAllFriendList
 
+| 输入参数     | 类型     | 说明  | 备注  |
+| --------- |--------|-----|-----|
+|ownerUserID    | string |     |     |
+
 **无输入参数**
 
 | 返回参数    | 类型     | 说明             | 备注  |
