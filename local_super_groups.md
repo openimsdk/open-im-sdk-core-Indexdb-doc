@@ -163,3 +163,41 @@ SELECT * FROM `local_sg_chat_logs_748402675` WHERE recv_id="748402675" And send_
 ```sql
 SELECT * FROM `local_sg_chat_logs_748402675` WHERE session_type=3 And recv_id=="748402675" And send_time between 0 and 1666768501000 AND status <=3 And content_type IN (101,106) ORDER BY send_time DESC LIMIT 20
 ```
+
+
+- getJoinedWorkingGroupIDList
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | number                                          |  |
+
+
+
+```sql
+SELECT * FROM `local_groups`
+找出groupType为2的groupID
+```
+
+
+- getJoinedWorkingGroupList
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | number           
+
+```sql
+ SELECT * FROM `local_groups`
+找出groupType为2的群对象返回
+```

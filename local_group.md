@@ -161,3 +161,40 @@ WHERE group_id like "%123%"
    or name like "%123%"
 ORDER BY create_time DESC
 ```
+
+
+
+- subtractMemberCount
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID | string | |
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 |
+| data      | number                                          |  |
+
+```sql
+UPDATE `local_groups` SET `member_count`=member_count-1 WHERE `group_id` = "groupID"
+```
+ 
+ 
+ - addMemberCount
+ 
+ | 输入参数     | 类型                                                         | 说明 |备注|
+ | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+ | groupID | string | |
+ 
+ 
+ | 返回参数     | 类型                                                         | 说明 |备注|
+ | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+ | errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+ | errMsg     | string                                          | 详细的err信息 |
+ | data      | number                                          |  |
+ 
+ ```sql
+ UPDATE `local_groups` SET `member_count`=member_count+1 WHERE `group_id` = "s"
+ ```
