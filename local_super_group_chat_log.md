@@ -316,10 +316,10 @@ WHERE status != 4
 | groupID | string | | |
 | args | map[string]interface{} | | |
 
-| 返回参数 | 类型 | 说明 | 备注 |
-| --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
-| errMsg | string | 详细的err信息 | |
+| 返回参数 | 类型 | 说明 | 备注      |
+| --------- |--------| ----- |---------|
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错  |
+| errMsg | string | 详细的err信息 |         |
 
 **参考sql语句说明：**
 
@@ -352,10 +352,10 @@ WHERE client_msg_id = "llasdaa"
 | --------- |--------| ----- |-----|
 | LocalChatLog | string |（表对象数据） |对象转换成string|
 
-| 返回参数 | 类型 | 说明 | 备注 |
-| --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
-| errMsg | string | 详细的err信息 | |
+| 返回参数 | 类型 | 说明 | 备注      |
+| --------- |--------| ----- |---------|
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错  |
+| errMsg | string | 详细的err信息 |         |
 
 **参考sql语句说明：**
 
@@ -385,10 +385,10 @@ WHERE `client_msg_id` = "llasdaa"
 | status | int32 | | |
 | sessionType | int32 | | |
 
-| 返回参数 | 类型 | 说明 | 备注 |
+| 返回参数 | 类型 | 说明 | 备注  |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
-| errMsg | string | 详细的err信息 | |
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错    |
+| errMsg | string | 详细的err信息 |     |
 
 **参考sql语句说明：**
 
@@ -405,10 +405,10 @@ WHERE (send_id = "547563" or recv_id = "547563")
 | --------- |--------| ----- |-----|
 | MsgStruct | string |（表对象数据） |对象转换成string|
 
-| 返回参数 | 类型 | 说明 | 备注 |
+| 返回参数 | 类型 | 说明 | 备注  |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
-| errMsg | string | 详细的err信息 | |
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错    |
+| errMsg | string | 详细的err信息 |     |
 
 **参考sql语句说明：**
 
@@ -504,10 +504,10 @@ WHERE status = 1
 | msgIDList | []string | | |
 | groupID | string | | |
 
-| 返回参数 | 类型 | 说明 | 备注 |
-| --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
-| errMsg | string | 详细的err信息 | |
+| 返回参数 | 类型 | 说明 | 备注      |
+| --------- |--------| ----- |---------|
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错  |
+| errMsg | string | 详细的err信息 |         |
 
 **参考sql语句说明：**
 
