@@ -57,7 +57,6 @@ SELECT `block_user_id`
 FROM `local_blacks`
 ```
 
-
 - getBlackInfoList
 
 | 输入参数              | 类型       | 说明  | 备注  |
@@ -122,7 +121,7 @@ WHERE owner_user_id = "3433303585"
 
 | 返回参数     | 类型            | 说明 | 备注  |
 | --------- | ------------ | ----- |-----|
-| errCode      | number   | 自定义即可，0成功，非0失败 |     |
+| errCode      | number   | 自定义即可，0成功，非0失败 | 获取不到报错 |
 | errMsg     | string     | 详细的err信息 |     |
 
 ```sqlite

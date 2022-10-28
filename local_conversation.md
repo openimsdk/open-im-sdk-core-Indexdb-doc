@@ -233,8 +233,7 @@ LIMIT 1
 | LocalConversation | string |（表对象数据） |对象转换成string|
 
 | 返回参数 | 类型 | 说明 | 备注 |
-| --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
+| --------- |--------| ----- |-----| errCode | number | 自定义即可，0成功，非0失败 |获取不到报错 |
 | errMsg | string | 详细的err信息 | |
 
 **参考sql语句说明：**
@@ -261,7 +260,7 @@ WHERE `conversation_id` = "123141"
 
 | 返回参数 | 类型 | 说明 | 备注 |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
+| errCode | number | 自定义即可，0成功，非0失败 |获取不到报错 |
 | errMsg | string | 详细的err信息 | |
 
 **参考sql语句说明：**
@@ -332,10 +331,10 @@ WHERE conversation_id = "123141"
 | --------- |--------| ----- |-----|
 | conversationID | string | | |
 
-| 返回参数 | 类型 | 说明 | 备注 |
-| --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
-| errMsg | string | 详细的err信息 | |
+| 返回参数 | 类型 | 说明 | 备注      |
+| --------- |--------| ----- |---------|
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错  |
+| errMsg | string | 详细的err信息 |         |
 
 **参考sql语句说明：**
 
@@ -355,7 +354,7 @@ WHERE `conversation_id` = "123141"
 
 | 返回参数 | 类型 | 说明 | 备注 |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
+| errCode | number | 自定义即可，0成功，非0失败 |获取不到报错 |
 | errMsg | string | 详细的err信息 | |
 
 **参考sql语句说明：**
@@ -377,7 +376,7 @@ SET `unread_count`=0,
 
 | 返回参数 | 类型 | 说明 | 备注 |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
+| errCode | number | 自定义即可，0成功，非0失败 |获取不到报错 |
 | errMsg | string | 详细的err信息 | |
 
 **参考sql语句说明：**
@@ -397,7 +396,7 @@ WHERE `conversation_id` = "123141"
 
 | 返回参数 | 类型 | 说明 | 备注 |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错|
 | errMsg | string | 详细的err信息 | |
 
 **参考sql语句说明：**
@@ -419,7 +418,7 @@ SET `unread_count`=0,
 
 | 返回参数 | 类型 | 说明 | 备注 |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
+| errCode | number | 自定义即可，0成功，非0失败 |获取不到报错 |
 | errMsg | string | 详细的err信息 | |
 
 **参考sql语句说明：**
@@ -441,7 +440,7 @@ where conversation_id = "123141"
 
 | 返回参数 | 类型 | 说明 | 备注 |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错|
 | errMsg | string | 详细的err信息 | |
 
 **参考sql语句说明：**
@@ -462,7 +461,7 @@ WHERE `conversation_id` = "123141"
 
 | 返回参数 | 类型 | 说明 | 备注 |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错|
 | errMsg | string | 详细的err信息 | |
 
 **参考sql语句说明：**
@@ -481,10 +480,10 @@ where conversation_id = "123141"
 | conversationID | string | | |
 | args | map[string]interface{} | | |
 
-| 返回参数 | 类型 | 说明 | 备注 |
-| --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
-| errMsg | string | 详细的err信息 | |
+| 返回参数 | 类型 | 说明 | 备注      |
+| --------- |--------| ----- |---------|
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错  |
+| errMsg | string | 详细的err信息 |         |
 
 **参考sql语句说明：**
 
@@ -518,10 +517,10 @@ WHERE `conversation_id` = "123141"
 | --------- |--------| ----- |-----|
 | LocalConversation | string |（表对象数据） |对象转换成string|
 
-| 返回参数 | 类型 | 说明 | 备注 |
-| --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
-| errMsg | string | 详细的err信息 | |
+| 返回参数 | 类型 | 说明 | 备注      |
+| --------- |--------| ----- |---------|
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错  |
+| errMsg | string | 详细的err信息 |         |
 
 **参考sql语句说明：**
 
@@ -544,10 +543,10 @@ SET `user_id`="123",
 | --------- |--------| ----- |-----|
 | conversationID | string | | |
 
-| 返回参数 | 类型 | 说明 | 备注 |
+| 返回参数 | 类型 | 说明 | 备注  |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
-| errMsg | string | 详细的err信息 | |
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错    |
+| errMsg | string | 详细的err信息 |     |
 
 **参考sql语句说明：**
 
@@ -582,11 +581,11 @@ WHERE recv_msg_opt < 2
 | conversationIDList | []string | | |
 | opt | int | | |
 
-| 返回参数 | 类型 | 说明 | 备注 |
+| 返回参数 | 类型 | 说明 | 备注  |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
-| errMsg | string | 详细的err信息 | |
-| data | errerror | | |
+| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错    |
+| errMsg | string | 详细的err信息 |     |
+| data | errerror | |     |
 
 **参考sql语句说明：**
 
@@ -625,7 +624,7 @@ WHERE conversation_id IN ("123141")
 
 | 返回参数 | 类型 | 说明 | 备注 |
 | --------- |--------| ----- |-----|
-| errCode | number | 自定义即可，0成功，非0失败 | |
+| errCode | number | 自定义即可，0成功，非0失败 |获取不到报错 |
 | errMsg | string | 详细的err信息 | |
 
 **参考sql语句说明：**

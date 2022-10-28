@@ -81,7 +81,7 @@ WHERE from_user_id = "457"
 
 | 返回参数     | 类型            | 说明 | 备注  |
 | --------- | ------------ | ----- |-----|
-| errCode      | number   | 自定义即可，0成功，非0失败 |     |
+| errCode      | number   | 自定义即可，0成功，非0失败 |   获取不到报错  |
 | errMsg     | string     | 详细的err信息 |     |
 
 ```sqlite
