@@ -469,7 +469,7 @@ UPDATE `local_chat_logs` SET `sender_face_url`="xx",`sender_nick_name`="" WHERE 
 **参考sql语句说明：**
 
 ```sql
-SELECT `seq` FROM `local_chat_logs` WHERE client_msg_id="ss" ORDER BY `local_chat_logs`.`client_msg_id` LIMIT 1
+SELECT `seq` FROM `local_chat_logs` WHERE client_msg_id="ss"  LIMIT 1
 ```
 
 - getMsgSeqListByGroupID
