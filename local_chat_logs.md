@@ -257,8 +257,8 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| contentType                                     | []int  | 消息类型| 
-| sourceID | string | 0为or匹配, 1为and匹配 | 来源id 可以为用户 大群 群id
+| contentType                                     | string | 消息类型列表，为整型数组转换后的string| 
+| sourceID | string | 源ID， 可以为用户， 普通群id | 
 | startTime | int | 开始时间戳 |
 | endTime | int | 结束时间戳 |
 | sessionType | int | 会话类型 | 不能填3
@@ -274,7 +274,7 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 **参考sql语句说明：**
 
 ```sql
-SELECT * FROM `local_chat_logs` WHERE session_type==1 And (send_id=="3433303585" OR recv_id=="3433303585") And send_time between 0 and 1666767929000 AND status <=3 And content_type IN (101,106) ORDER BY send_time DESC LIMIT 20
+SELECT * FROM `local_chat_logs` WHERE session_type==1 And (send_id=="3433303585" OR recv_id=="3433303585") And send_time between 0 and 1666767929000 AND status <=3 And content_type IN (101,106) ORDER BY send_time DESC LIMIT 20 OFFSET 0;
 ```
 
 
