@@ -228,26 +228,26 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| contentType                                     | []int  | 消息类型| 
-| keywordList | []string | 关键字列表 |
-| keywordListMatchType | int | 关键字匹配类型 |
-| sourceID | string | 0为or匹配, 1为and匹配 | 来源id 可以为用户 大群 群id
-| startTime | int | 开始时间戳 |
-| endTime | int | 结束时间戳 |
-| sessionType | int | 会话类型 |
-| offset | int | 偏移数 | 
-| count | int | 获取总数 |
+| contentType                                     | string | 消息类型列表，为整型数组转换后的string| 
+| keywordList | string | 关键字列表，为字符串数组转换后的string |
+| keywordListMatchType | 0为or匹配, 1为and匹配 |  |
+| sourceID | string |  | 来源id 可以为用户和普通群群ID
+| startTime | number | 开始时间戳 |
+| endTime | number | 结束时间戳 |
+| sessionType | number | 会话类型 |
+| offset | number | 偏移数 | 
+| count | number | 获取总数 |
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"", 搜索数据 ||
+| data      | string                                          | []LocalChatLog（消息表对象数组数据）转换后的string ||
 
 **参考sql语句说明：**
 
 ```sql
- SELECT * FROM `local_chat_logs` WHERE session_type==1 And (send_id=="1889848740" OR recv_id=="1889848740") And send_time  between 0 and 1666766907000 AND status <=3  And content_type IN (101,106) And (content like '%1%')  ORDER BY send_time DESC LIMIT 20
+ SELECT * FROM `local_chat_logs` WHERE session_type==1 And (send_id=="1889848740" OR recv_id=="1889848740") And send_time  between 0 and 1666766907000 AND status <=3  And content_type IN (101,106) And (content like '%1%')  ORDER BY send_time DESC LIMIT 20 OFFSET 0;
 ```
 
 
@@ -259,17 +259,17 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | contentType                                     | string | 消息类型列表，为整型数组转换后的string| 
 | sourceID | string | 源ID， 可以为用户， 普通群id | 
-| startTime | int | 开始时间戳 |
-| endTime | int | 结束时间戳 |
-| sessionType | int | 会话类型 | 不能填3
-| offset | int | 偏移数 | 
-| count | int | 获取总数 |
+| startTime | number | 开始时间戳 |
+| endTime | number | 结束时间戳 |
+| sessionType | number | 会话类型 | 不能填3
+| offset | number | 偏移数 | 
+| count | number | 获取总数 |
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"", 搜索数据 ||
+| data      | string                                          | []LocalChatLog（消息表对象数组数据）转换后的string ||
 
 **参考sql语句说明：**
 
@@ -284,18 +284,18 @@ SELECT * FROM `local_chat_logs` WHERE session_type==1 And (send_id=="3433303585"
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| contentType                                     | []int  | 消息类型| 
-| keywordList | []string | 关键字列表 |
-| keywordListMatchType | int | 关键字匹配类型 |
-| startTime | int | 开始时间戳 |
-| endTime | int | 结束时间戳 |
+| contentType                                        | string | 消息类型列表，为整型数组转换后的string|
+| keywordList | string | 关键字列表，为字符串数组转换后的string |
+| keywordListMatchType | 0为or匹配, 1为and匹配 |  |
+| startTime | number | 开始时间戳 |
+| endTime | number | 结束时间戳 |
 
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"", 搜索数据 ||
+| data      | string                                          | []LocalChatLog（消息表对象数组数据）转换后的string ||
 
 **参考sql语句说明：**
 
