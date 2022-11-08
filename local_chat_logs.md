@@ -673,3 +673,26 @@ UPDATE `local_chat_logs` SET `is_read`=1 WHERE send_id="s"  AND session_type=1 A
 UPDATE `local_chat_logs` SET `is_read`=1 WHERE session_type=3 AND client_msg_id in ("12","ds")
 ```
 
+- updateMessageStatusBySourceID
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| sourceID                                     | string  | 关于某人的ID也可能是写扩散模式下群ID|
+| status | number |消息状态值 |
+| sessionType | number                                     | 会话类型，单聊1、读扩散群2、大群为3      ||
+| loginUserID | string | 用户登录ID |需要根据会话的类型和sourceID判断，当sessionType为1并且sourceID为登录者ID时候，sql为 AND|
+
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |如果没更新到任何一行消息也返回错误|
+| errMsg     | string                                          | 详细的err信息 |
+| data      | number                                          | 可为"" |
+
+```sql
+-- 1、sessionType == 1 && sourceID == d.loginUserID
+UPDATE `local_chat_logs` SET `status`=4, WHERE session_type=1 AND send_id= "ss" AND recv_id="ss"
+-- 2、
+UPDATE `local_chat_logs` SET `status`=4, WHERE session_type=1 AND (send_id= "ss" or recv_id="ss")
+```
