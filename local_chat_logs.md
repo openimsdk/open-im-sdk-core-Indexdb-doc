@@ -696,3 +696,21 @@ UPDATE `local_chat_logs` SET `status`=4, WHERE session_type=1 AND send_id= "ss" 
 -- 2、
 UPDATE `local_chat_logs` SET `status`=4, WHERE session_type=1 AND (send_id= "ss" or recv_id="ss")
 ```
+
+- searchAllMessageByContentType
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| contentType    | number                                          | 消息类型 ||
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | []LocalChatLog（消息表对象数组数据） |数组转换成string|
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `local_chat_logs` WHERE content_type = 114
+
+```

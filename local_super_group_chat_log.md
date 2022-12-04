@@ -749,6 +749,23 @@ FROM `local_chat_logs`
 WHERE recv_id = "1234"
   and send_id = "1234"
 ```
+- superGroupSearchAllMessageByContentType
 
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| groupID | string | 群ID| |
+| contentType    | number                                          | 消息类型 ||
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          | []LocalChatLog（消息表对象数组数据） |数组转换成string|
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `local_sg_chat_logs_243953` WHERE content_type = 114
+
+```
 
 
