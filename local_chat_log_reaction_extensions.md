@@ -90,3 +90,22 @@ typeKey和value的类型为string，latestUpdateTime为整型，单位为毫秒 
 ```sqlite
 
 ```
+
+
+- getMultipleMessageReactionExtension
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| msgIDList                                     | []string  | 消息ID列表|对象转换成string
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string     |  []local_chat_log_reaction_extensions（消息扩展表对象数组) |对象数组转换成string|
+
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `local_chat_log_reaction_extensions` WHERE client_msg_id IN ("d9ef1e4e63394b856b8a781ef0234b49","00da0b5471f0bca5a41c92e09419f9dc");
+```
