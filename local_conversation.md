@@ -409,7 +409,7 @@ SET `unread_count`=0,
     `draft_text_time`=0
 ```
 
-- setConversationDraft
+- setConversationDraftDB
 
 | 输入参数 | 类型 | 说明 | 备注 |
 | --------- |--------| ----- |-----|
