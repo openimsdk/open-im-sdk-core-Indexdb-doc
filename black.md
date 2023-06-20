@@ -52,7 +52,7 @@ FROM `local_blacks`
 | --------- |--------| ----- |-----|
 | errCode | number | 自定义即可，0成功，非0失败 | |
 | errMsg | string | 详细的err信息 | |
-| data | blackListUid[]string | | || data | errerror | | |
+| data | blackListUid[]string | | 对象转换成string |
 
 **参考sql语句说明：**
 

@@ -115,6 +115,48 @@ SELECT *
 FROM `local_conversations`
 ```
 
+
+
++ getAllSingleConversationIDList
+
+| 输入参数 | 类型 | 说明 | 备注 |
+| -------- | ---- | ---- | ---- |
+|          |      |      |      |
+
+| 返回参数 | 类型     | 说明                                         | 备注 |
+| -------- | -------- | -------------------------------------------- | ---- |
+| errCode  | number   | 自定义即可，0成功，非0失败                   |      |
+| errMsg   | string   | 详细的err信息                                |      |
+| data     | string[] | 所有单聊会话的 conversation_id（会话ID）列表 |      |
+
+参考 SQL 语句说明：
+
+```
+SELECT conversation_id FROM `local_conversations` WHERE conversation_type = 1
+```
+
+
+
++ getAllConversationIDList
+
+| 输入参数 | 类型 | 说明 | 备注 |
+| -------- | ---- | ---- | ---- |
+|          |      |      |      |
+
+| 返回参数 | 类型     | 说明                                         | 备注 |
+| -------- | -------- | -------------------------------------------- | ---- |
+| errCode  | number   | 自定义即可，0成功，非0失败                   |      |
+| errMsg   | string   | 详细的err信息                                |      |
+| data     | string[] | 所有单聊会话的 conversation_id（会话ID）列表 |      |
+
+参考 SQL 语句说明：
+
+```
+SELECT conversation_id FROM `local_conversations` WHERE conversation_type = 1
+```
+
+
+
 - getConversationListSplit
 
 | 输入参数 | 类型 | 说明 | 备注 |
@@ -162,6 +204,34 @@ INSERT INTO `local_conversations` (`conversation_id`, `conversation_type`, `user
 VALUES ("123141", 0, "123", "12", "1213121", "", 0, 0, 0, "", 1666851360, "", 1666851360, true, true, true, 1666851360,
         "", "")
 ```
+
+
+
+- UpdateOrCreateConversations
+
+| 输入参数         | 类型                     | 说明             | 备注 |
+| ---------------- | ------------------------ | ---------------- | ---- |
+| conversationList | []LocalConversation 对象 | 会话列表对象数组 |      |
+
+| 返回参数 | 类型   | 说明            | 备注               |
+| -------- | ------ | --------------- | ------------------ |
+| errCode  | number | 自定义即可      | 0为成功，非0为失败 |
+| errMsg   | string | 详细的 err 信息 |                    |
+| data     | string | 无              | 无                 |
+
+
+
+**参考sql语句说明：**
+
+```sql
+-- 获取所有 conversation_id
+SELECT conversation_id FROM `local_conversations` ;
+
+-- 插入会话列表
+INSERT INTO `local_conversations` (`conversation_id`,`session_type`,`source_id`,`target_id`,`unread_count`,`update_time`) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE `unread_count`=VALUES(`unread_count`);
+```
+
+
 
 - insertConversation
 
