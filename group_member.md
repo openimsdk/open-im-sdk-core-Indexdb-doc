@@ -34,7 +34,7 @@ CREATE TABLE "local_group_members" (
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
 | data      | string                                          | 可为"" []LocalGroupMember  ||
-**参考sql语句说明：**
+|**参考sql语句说明：**|||转化为 string 类型|
 ```sql
 SELECT * FROM `local_group_members` WHERE group_id = "x" AND user_id = "x2" LIMIT 1
 ```
@@ -49,8 +49,8 @@ SELECT * FROM `local_group_members` WHERE group_id = "x" AND user_id = "x2" LIMI
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []LocalGroupMember ||
-**参考sql语句说明：**
+| data      | string                                          | 可为"" []LocalGroupMember |转化为 string 类型|
+|**参考sql语句说明：**||||
 ```sql
 SELECT * FROM `local_group_members`
 ```
@@ -65,8 +65,8 @@ SELECT * FROM `local_group_members`
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []LocalGroupMember ||
-**参考sql语句说明：**
+| data      | string                                          | 可为"" []LocalGroupMember |转化为 string 类型|
+|**参考sql语句说明：**||||
 ```sql
 SELECT * FROM `local_group_members`
 ```
@@ -82,8 +82,8 @@ SELECT * FROM `local_group_members`
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败||
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | int                                          |  ||
-**参考sql语句说明：**
+| data      | int                                          |  |转化为 float64 类型|
+|**参考sql语句说明：**||||
 
 ```sql
 SELECT count(*) FROM `local_group_members` WHERE group_id = "x" 
@@ -103,12 +103,12 @@ SELECT count(*) FROM `local_group_members` WHERE group_id = "x"
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []LocalGroupMember ||
+| data      | string                                          | 可为"" []LocalGroupMember |转化为 string 类型|
 
 **参考sql语句说明：**
 ```sql
 SELECT * FROM `local_group_members` WHERE group_id = "x" And user_id IN ("1") 
-``` 
+```
 
 - getGroupAdminID
 
@@ -120,12 +120,12 @@ SELECT * FROM `local_group_members` WHERE group_id = "x" And user_id IN ("1")
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []string ||
+| data      | string                                          | 可为"" []string |转化为 string 类型|
 
 **参考sql语句说明：**
 ```sql
 SELECT `user_id` FROM `local_group_members` WHERE group_id = "x" And role_level = 3
-``` 
+```
 
 - getGroupMemberListByGroupID
 
@@ -137,12 +137,12 @@ SELECT `user_id` FROM `local_group_members` WHERE group_id = "x" And role_level 
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []LocalGroupMember ||
+| data      | string                                          | 可为"" []LocalGroupMember |转化为 string 类型|
 
 **参考sql语句说明：**
 ```sql
 SELECT * FROM `local_group_members` WHERE group_id = "x" 
-``` 
+```
 
 - getGroupMemberListSplit
 
@@ -157,7 +157,7 @@ SELECT * FROM `local_group_members` WHERE group_id = "x"
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []LocalGroupMember ||
+| data      | string                                          | 可为"" []LocalGroupMember |转化为 string 类型|
 
 **参考sql语句说明：**
 ```sql
@@ -176,12 +176,12 @@ SELECT * FROM `local_group_members` WHERE group_id = "x"
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []LocalGroupMember ||
+| data      | string                                          | 可为"" []LocalGroupMember |转化为 string 类型|
 
 **参考sql语句说明：**
 ```sql
 SELECT * FROM `local_group_members` WHERE group_id = "x" And role_level > 1 ORDER BY join_time DESC
-``` 
+```
 
 - getGroupMemberOwner
 
@@ -193,7 +193,7 @@ SELECT * FROM `local_group_members` WHERE group_id = "x" And role_level > 1 ORDE
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []LocalGroupMember ||
+| data      | string                                          | 可为"" []LocalGroupMember |转化为 string 类型|
 
 **参考sql语句说明：**
 ```sql
@@ -215,7 +215,7 @@ SELECT * FROM `local_group_members` WHERE group_id = "x" And role_level = 2
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []LocalGroupMember ||
+| data      | string                                          | 可为"" []LocalGroupMember |转化为 string 类型|
 
 **参考sql语句说明：**
 ```sql
@@ -233,7 +233,7 @@ SELECT * FROM `local_group_members` WHERE group_id = "x" And role_level = 2
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []LocalGroupMember ||
+| data      | string                                          | 可为"" []LocalGroupMember |转化为 string 类型|
 
 **参考sql语句说明：**
 ```sql
@@ -250,7 +250,7 @@ SELECT * FROM `local_group_members` WHERE group_id = "x"  AND role_level > 1
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败|没有返回空数组不报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为"" []string ||
+| data      | string                                          | 可为"" []string |转化为 string 类型|
 
 **参考sql语句说明：**
 ```sql
@@ -364,7 +364,7 @@ UPDATE `local_group_members` SET `group_id`="1",`user_id`="1",`nickname`="1",`us
 
 ```sql
 UPDATE `local_group_members` SET `nickname`="x" WHERE `group_id` = "1" AND `user_id` = "1"
-```  
+```
 
 - searchGroupMembers
 
