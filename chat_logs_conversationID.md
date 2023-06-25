@@ -45,8 +45,9 @@ CREATE TABLE `chat_logs_si_7788_7789` (
 #### 接口说明：
 - getMessage
 
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| 输入参数     | 类型                                                         | 说明   |备注|
+| --------- | ------------------------------------------------------------ |------|-----------------------|
+| conversationID      | string                                          | 会话ID ||
 | clientMsgID      | string                                          | 消息ID ||
 
 | 返回参数     | 类型                                                         | 说明 |备注|
@@ -62,18 +63,18 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id = "063031b86f8e503c60
 ```
 - getAlreadyExistSeqList
 
-| 参数名称       | 类型    | 说明             | 备注 |
-| -------------- | ------- | ---------------- | ---- |
-| conversationID | string  | 会话 ID          |      |
-| lostSeqList    | []int64 | 丢失的序列号列表 |      |
+| 参数名称       | 类型     | 说明                       | 备注 |
+| -------------- |--------|--------------------------| ---- |
+| conversationID | string | 会话 ID                    |      |
+| lostSeqList    | string | 丢失的序列号列表,为整型数组转换后的string |      |
 
 #### 输出参数
 
-| 参数名称 | 参数类型 | 参数说明                                     | 备注 |
-| -------- | -------- | -------------------------------------------- | ---- |
-| errCode  | number   | 自定义即可，0 表示成功，非 0 表示失败        |      |
-| errMsg   | string   | 详细的错误信息                               |      |
-| data     | []int64  | 已经存在的序列号列表，如果没有则返回空的列表 |      |
+| 参数名称 | 参数类型   | 参数说明                                  | 备注 |
+| -------- |--------|---------------------------------------| ---- |
+| errCode  | number | 自定义即可，0 表示成功，非 0 表示失败                 |      |
+| errMsg   | string | 详细的错误信息                               |      |
+| data     | string | 已经存在的序列号列表 整型数组转换后的string，如果没有则返回空字符串 |      |
 
 
 
@@ -81,12 +82,10 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id = "063031b86f8e503c60
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| sourceID                                     | string  | 关于某人的ID也可能是写扩散模式下群ID|
-| sessionType | number                                     | 会话类型，单聊1、读扩散群2、大群为3      ||
+| conversationID | string | 会话 ID                    |      |
 | count | number | 获取消息的数量 ||
 | startTime | number | 消息发送时间，毫秒 ||
 | isReverse | boolean | 消息为正向拉取还是反向拉取|默认情况为false，即为正向拉取（从新消息到老消息），order by 后面的排序规则为send_time DESC 降序排列，send_time为 <;当为true的情况，即为反向拉取，order by 后面的排序规则为send_time ASC 升序排列,send_time为 >|
-| loginUserID | string | 用户登录ID |需要根据会话的类型和sourceID判断，当sessionType为1并且sourceID为登录者ID时候，搜索sql为 AND|
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -105,6 +104,7 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time < 1664357584025 ORDER BY 
 
 | 输入参数 | 类型   | 说明     | 备注 |
 | -------- | ------ | -------- | ---- |
+| conversationID | string | 会话 ID                    |      |
 | seq      | number | 消息序列 |      |
 
 | 返回参数 | 类型   | 说明                           | 备注                           |
@@ -146,6 +146,7 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id IN ("063031b86f8e503c
 
 | 输入参数 | 类型     | 说明           | 备注 |
 | -------- | -------- | -------------- | ---- |
+| conversationID | string   | 会话 ID |      |
 | seqs     | number[] | 消息序列号数组 |      |
 
 | 返回参数 | 类型   | 说明                                 | 备注                                   |
@@ -180,11 +181,8 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE seq IN (1,2,3,4) ORDER BY send_time
 **参考sql语句说明：**
 
 ```sql
--- 1、sessionType == 1 && sourceID == d.loginUserID
-SELECT * FROM `chat_logs_si_7788_7789` WHERE send_id = "812146266" And  recv_id = "812146266" AND status <=3 And session_type = 1  ORDER BY send_time DESC LIMIT 30;
--- 注：其中status固定为3
--- 2、其他场景
-SELECT * FROM `chat_logs_si_7788_7789` WHERE send_id = "812146266" OR  recv_id = "812146266" AND status <=3 And session_type = 1  ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `chat_logs_si_7788_7789`  ORDER BY send_time DESC LIMIT 30;
+
 ```
 
 [comment]: <> "- setChatLogFailedStatus"
@@ -192,33 +190,49 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE send_id = "812146266" OR  recv_id =
 
 - getConversationNormalMsgSeq
 
-*db层找不到调用：*
+| 输入参数           | 类型                                                         | 说明                  |备注|
+|----------------| ------------------------------------------------------------ |---------------------|-----------------------|
+| conversationID | string  | 会话ID                |
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | number                                    | 消息表中最大seq ||
+
+**参考sql语句说明：**
+
+```sql
+SELECT IFNULL(max(seq),0) FROM `local_chat_logs`;
+```
 
 
 
 - getConversationPeerNormalMsgSeq
 
-| 输入参数       | 类型   | 说明   | 备注 |
-| -------------- | ------ | ------ | ---- |
+| 输入参数       | 类型   | 说明 | 备注 |
+| -------------- | ------ |--| ---- |
 | conversationID | string | 会话ID |      |
+| loginUserID | string | 用户ID |      |
 
-| 返回参数 | 类型   | 说明                       | 备注                           |
-| -------- | ------ | -------------------------- | ------------------------------ |
-| errCode  | number | 自定义即可，0成功，非0失败 | 如果获取不到消息也需要返回错误 |
-| errMsg   | string | 详细的err信息              |                                |
-| data     | number | int64（消息表对象数据）    |                                |
+
+| 返回参数 | 类型   | 说明              | 备注                           |
+| -------- | ------ |-----------------| ------------------------------ |
+| errCode  | number | 自定义即可，0成功，非0失败  | 如果获取不到消息也需要返回错误 |
+| errMsg   | string | 详细的err信息        |                                |
+| data     | number | int64（对方最大的seq） |                                |
 
 **参考 sql 语句说明：**
 
 ```
-SELECT IFNULL(MAX(seq), 0) FROM `chat_logs_si_7788_7789` WHERE conversation_id = "conversation_id" AND send_id != "login_user_id";
+SELECT IFNULL(MAX(seq), 0) FROM `chat_logs_si_7788_7789` WHERE  send_id != "7788";
 ```
 
 
 
-- GetConversationAbnormalMsgSeq
+[//]: # (- GetConversationAbnormalMsgSeq)
 - 
-- getSendingMessageList
+- getSendingMessageList(暂时没用)
 
 **无输入参数**
 
@@ -241,28 +255,15 @@ select * from chat_logs_si_7788_7789 where status = 1;
 -- 	MsgStatusFiltered    = 6
 ```
 
-- getNormalMsgSeq
 
 
-**无输入参数**
-
-| 返回参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| errCode      | number                                         | 自定义即可，0成功，非0失败 ||
-| errMsg     | string                                          | 详细的err信息 ||
-| data      | number                                    | 消息表中最大seq ||
-
-**参考sql语句说明：**
-
-```sql
-SELECT IFNULL(max(seq),0) FROM `chat_logs_si_7788_7789`;
-```
 
 
 - updateMessageTimeAndStatus
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| conversationID | string | 会话ID |      |
 | clientMsgID | string                                     | 客户端消息ID       ||
 | serverMsgID | string | 服务器消息ID ||
 | sendTime | number | 消息发送时间，毫秒 ||
@@ -280,12 +281,13 @@ SELECT IFNULL(max(seq),0) FROM `chat_logs_si_7788_7789`;
  UPDATE `chat_logs_si_7788_7789` SET `server_msg_id`="75dee2fbd6c4f28e7895f8410be4984f",`status`=2,`send_time`=1663658950513 WHERE client_msg_id="985261c57242cf647753839854038154" And seq=0;
 ```
 
-BatchUpdateMessageList
+
 
 - updateMessage
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| conversationID | string | 会话ID |      |
 | clientMsgID | string                                     | 客户端消息ID       ||
 | args        | object | 更新字段参数对象 |内部是kv，k为字段名，v为需要更新的字段内容Js实现db接口简要说明|
 
@@ -305,6 +307,7 @@ BatchUpdateMessageList
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| conversationID | string | 会话ID |      |
 | messageList                                     | string  | []LocalChatLog（消息表对象数组数据）|对象数组转换成string
 
 | 返回参数     | 类型                                                         | 说明 |备注|
@@ -323,6 +326,7 @@ BatchUpdateMessageList
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| conversationID | string | 会话ID |      |
 | message                                     | string  | LocalChatLog（消息表对象）|对象转换成string
 
 | 返回参数     | 类型                                                         | 说明 |备注|
@@ -338,7 +342,7 @@ BatchUpdateMessageList
 ```
 
 
-- getMultipleMessage
+- getMultipleMessage（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -360,13 +364,12 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| conversationID | string | 会话ID |      |
 | contentType                                     | string | 消息类型列表，为整型数组转换后的string| 
 | keywordList | string | 关键字列表，为字符串数组转换后的string |
 | keywordListMatchType | 0为or匹配, 1为and匹配 |  |
-| sourceID | string |  | 来源id 可以为用户和普通群群ID
 | startTime | number | 开始时间戳 |
 | endTime | number | 结束时间戳 |
-| sessionType | number | 会话类型 |
 | offset | number | 偏移数 | 
 | count | number | 获取总数 |
 
@@ -379,7 +382,7 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 **参考sql语句说明：**
 
 ```sql
- SELECT * FROM `chat_logs_si_7788_7789` WHERE session_type==1 And (send_id=="1889848740" OR recv_id=="1889848740") And send_time  between 0 and 1666766907000 AND status <=3  And content_type IN (101,106) And (content like '%1%')  ORDER BY send_time DESC LIMIT 20 OFFSET 0;
+ SELECT * FROM `chat_logs_si_7788_7789` WHERE  send_time  between 0 and 1666766907000 AND status <=3  And content_type IN (101,106) And (content like '%1%')  ORDER BY send_time DESC LIMIT 20 OFFSET 0;
 ```
 
 
@@ -389,8 +392,8 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| contentType                                     | string | 消息类型列表，为整型数组转换后的string| 
-| sourceID | string | 源ID， 可以为用户， 普通群id | 
+| conversationID | string | 会话ID |      |
+| contentType                                     | string | 消息类型列表，为整型数组转换后的string|
 | startTime | number | 开始时间戳 |
 | endTime | number | 结束时间戳 |
 | sessionType | number | 会话类型 | 不能填3
@@ -406,7 +409,7 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 **参考sql语句说明：**
 
 ```sql
-SELECT * FROM `chat_logs_si_7788_7789` WHERE session_type==1 And (send_id=="3433303585" OR recv_id=="3433303585") And send_time between 0 and 1666767929000 AND status <=3 And content_type IN (101,106) ORDER BY send_time DESC LIMIT 20 OFFSET 0;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time between 0 and 1666767929000 AND status <=3 And content_type IN (101,106) ORDER BY send_time DESC LIMIT 20 OFFSET 0;
 ```
 
 
@@ -416,6 +419,7 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE session_type==1 And (send_id=="3433
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| conversationID | string | 会话ID |      |
 | contentType                                        | string | 消息类型列表，为整型数组转换后的string|
 | keywordList | string | 关键字列表，为字符串数组转换后的string |
 | keywordListMatchType | 0为or匹配, 1为and匹配 |  |
@@ -435,7 +439,7 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE session_type==1 And (send_id=="3433
 SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time between 0 and 1666769211000 AND status <=3  And content_type IN (101,106)  ORDER BY send_time DESC
 ```
 
-- messageIfExists
+- messageIfExists（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -453,7 +457,7 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time between 0 and 16667692110
 SELECT count(*) FROM `chat_logs_si_7788_7789` WHERE client_msg_id == "xxx";
 ```
 
-- isExistsInErrChatLogBySeq
+- isExistsInErrChatLogBySeq（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -471,7 +475,7 @@ SELECT count(*) FROM `chat_logs_si_7788_7789` WHERE client_msg_id == "xxx";
 SELECT count(*) FROM `local_err_chat_logs` WHERE seq == 1;
 ```
 
-- MessageIfExistsBySeq
+- MessageIfExistsBySeq（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -489,7 +493,7 @@ SELECT count(*) FROM `local_err_chat_logs` WHERE seq == 1;
 SELECT count(*) FROM `chat_logs_si_7788_7789` WHERE seq == 1;
 ```
 
-- UpdateGroupMessageHasRead
+- UpdateGroupMessageHasRead（暂未使用）
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | msgIDList                                     | string | 消息ID列表转换后的string |
@@ -507,7 +511,7 @@ UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE session_type=2 AND client_
 ```
 
 
-- getMultipleMessage
+- getMultipleMessage（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -524,7 +528,7 @@ UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE session_type=2 AND client_
 SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id IN ("a43fe26849cf4f9225262297967979f1") ORDER BY send_time DESC
 ```
 
-- updateMsgSenderNickname
+- updateMsgSenderNickname（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -544,7 +548,7 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id IN ("a43fe26849cf4f92
 UPDATE `chat_logs_si_7788_7789` SET `sender_nick_name`="xx" WHERE send_id = "ss" and session_type = 1 and sender_nick_name != "xx"
 ```
 
-- updateMsgSenderFaceURL
+- updateMsgSenderFaceURL（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -568,10 +572,10 @@ UPDATE `chat_logs_si_7788_7789` SET `sender_face_url`="xx" WHERE send_id = "ss" 
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| conversationID | string | 会话ID |      |
 | sendID                                     | string  |  |
 | faceURL | string |  |
 | nickname | string |  |
-| sType | int | sessionType
 
 
 | 返回参数     | 类型                                                         | 说明 |备注|
@@ -582,11 +586,11 @@ UPDATE `chat_logs_si_7788_7789` SET `sender_face_url`="xx" WHERE send_id = "ss" 
 
 **参考sql语句说明：**
 ```sql
-UPDATE `chat_logs_si_7788_7789` SET `sender_face_url`="xx",`sender_nick_name`="" WHERE send_id = "ss" and session_type = 1
+UPDATE `chat_logs_si_7788_7789` SET `sender_face_url`="xx",`sender_nick_name`="" WHERE send_id = "ss"
 ```
 
 
-- getMsgSeqByClientMsgID
+- getMsgSeqByClientMsgID（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -604,7 +608,7 @@ UPDATE `chat_logs_si_7788_7789` SET `sender_face_url`="xx",`sender_nick_name`=""
 SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE client_msg_id="ss"  LIMIT 1
 ```
 
-- getMsgSeqListByGroupID
+- getMsgSeqListByGroupID（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -623,7 +627,7 @@ SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE recv_id="ss"
 ```
 
 
-- getMsgSeqListByPeerUserID
+- getMsgSeqListByPeerUserID（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -641,7 +645,7 @@ SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE recv_id="ss"
 SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE recv_id="ss" or send_id="ss"
 ```
 
-- getMsgSeqListBySelfUserID
+- getMsgSeqListBySelfUserID（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -659,83 +663,10 @@ SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE recv_id="ss" or send_id="ss"
     SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE recv_id="ss" and send_id="ss"
 ```
 
-local_err_chat_logs表
-```sql
-CREATE TABLE "local_err_chat_logs" (
-  "seq" integer,
-  "client_msg_id" char(64),
-  "server_msg_id" char(64),
-  "send_id" char(64),
-  "recv_id" char(64),
-  "sender_platform_id" integer,
-  "sender_nick_name" varchar(255),
-  "sender_face_url" varchar(255),
-  "session_type" integer,
-  "msg_from" integer,
-  "content_type" integer,
-  "content" varchar(1000),
-  "is_read" numeric,
-  "status" integer,
-  "send_time" integer,
-  "create_time" integer,
-  "attached_info" varchar(1024),
-  "ex" varchar(1024),
-  PRIMARY KEY ("seq")
-);
-
-```
-
-- getAbnormalMsgSeq
 
 
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
 
-| 返回参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
-| errMsg     | string                                          | 详细的err信息 |
-| data      | uint32                                          |  |
-
-```sql
-SELECT IFNULL(max(seq),0) FROM `local_err_chat_logs`
-```
-
-
-- getAbnormalMsgSeqList
-
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-
-| 返回参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
-| errMsg     | string                                          | 详细的err信息 ||
-| data      | []int64                                     |  没有返回空列表|转化为 string|
-
-```sql
-SELECT `seq` FROM `local_err_chat_logs`
-```
-
-- batchInsertExceptionMsg
-
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| messageList | []LocalErrChatLog | |
-
-| 返回参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| errCode      | number                                         | 自定义即可，0成功，非0失败 |获取不到的时候返回空数组不需要返回错误|
-| errMsg     | string                                          | 详细的err信息 |
-| data      | []uint32                                          |  没有返回空列表| 
-
-
-```sql
- INSERT INTO `local_err_chat_logs` (`client_msg_id`,`server_msg_id`,`send_id`,`recv_id`,`sender_platform_id`,`sender_nick_name`,`sender_face_url`,`session_type`,`msg_from`,`content_type`,`content`,`is_read`,`status`,`send_time`,`create_time`,`attached_info`,`ex`,`seq`) VALUES ("1","1","1","1",0,"1","1",0,0,0,"",false,0,0,0,"","",1) RETURNING `seq`
-```
-
-
-- deleteAllMessage
+- deleteAllMessage（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -751,7 +682,7 @@ UPDATE `chat_logs_si_7788_7789` SET `content`="",`status`=4
 ```
 
 
-- getAllUnDeleteMessageSeqList
+- getAllUnDeleteMessageSeqList（暂未使用）
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -809,34 +740,103 @@ UPDATE `chat_logs_si_7788_7789` SET `status` = 2 WHERE (1 = 1) AND (`conversatio
 
 + getUnreadMessage
 
-*没用过*
+| 输入参数           | 类型   | 说明 | 备注 |
+|----------------| ------ |--| ---- |
+| conversationID | string | 会话ID |      |
+| loginUserID        | string | 用户ID |      |
+
+
+| 返回参数    | 类型   | 说明                                  | 备注           |
+|---------| ------ |-------------------------------------|--------------|
+| errCode | number | 自定义即可，0成功，非0失败                      | 如果找不到不需要返回错误 |
+| errMsg  | string | 详细的err信息                            |              |
+| data    | string | []LocalChatLog（消息表对象数组数据）转换后的string |              |
+
+**参考sql语句说明：**
+
+```
+select * from chat_logs_si_7788_7789 where send_id  != "7788" And is_read = 0;
+```
 
 
 
-+ MarkConversationMessageAsReadBySeqs
++ markConversationMessageAsReadBySeqs
 
-*没用过*
-
-
-
-+ MarkConversationMessageAsRead
-
-*没用过*
+| 输入参数           | 类型   | 说明 | 备注 |
+|----------------| ------ |--| ---- |
+| conversationID | string | 会话ID |      |
+| seqs  | string | 整型数组转换后的string |      |
+| loginUserID        | string | 用户ID |      |
 
 
+| 返回参数    | 类型     | 说明                | 备注           |
+|---------|--------|-------------------|--------------|
+| errCode | number | 自定义即可，0成功，非0失败    |  |
+| errMsg  | string | 详细的err信息          |              |
+| data    | number | 更新影响的行数 |              |
 
-+ UpdateMessageByClientMsgID
+**参考sql语句说明：**
 
-*没用过*
+```
+UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE `seq` IN (1,2) And send_id != "7788";
+```
+
+
+
+
++ markConversationMessageAsRead
+
+| 输入参数           | 类型   | 说明 | 备注 |
+|----------------| ------ |--| ---- |
+| conversationID | string | 会话ID |      |
+| msgIDs  | string | 消息ID字符串数组转换后的string |      |
+| loginUserID        | string | 用户ID |      |
+
+
+| 返回参数    | 类型     | 说明                | 备注           |
+|---------|--------|-------------------|--------------|
+| errCode | number | 自定义即可，0成功，非0失败    |  |
+| errMsg  | string | 详细的err信息          |              |
+| data    | number | 更新影响的行数 |              |
+
+**参考sql语句说明：**
+
+```
+UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE `client_msg_id` IN ("34343434","234234324234") And send_id != "7788";
+```
+
+
+
++ updateColumnsMessage
+
+| 输入参数           | 类型   | 说明 | 备注 |
+|----------------| ------ |--| ---- |
+| conversationID | string | 会话ID |      |
+| clientMsgID  | string | 消息ID |      |
+| args        | string | map转换成的string |      |
+
+
+| 返回参数    | 类型     | 说明               | 备注           |
+|---------|--------|------------------|--------------|
+| errCode | number | 自定义即可，0成功，非0失败   |  |
+| errMsg  | string | 详细的err信息         |              |
+| data    | string | |              |
+
+**参考sql语句说明：**
+
+```
+UPDATE `chat_logs_si_7788_7789` SET `attached_info`="24234" WHERE `client_msg_id` = '2342342343';
+
+```
 
 
 
 + deleteConversationMsgs
 
-| 输入参数       | 类型     | 说明                          | 备注 |
-| -------------- | -------- | ----------------------------- | ---- |
-| conversationID | string   | 会话ID                        |      |
-| msgIDs         | []string | 待删除消息的 clientMsgID 数组 |      |
+| 输入参数       | 类型     | 说明                                | 备注 |
+| -------------- |--------|-----------------------------------| ---- |
+| conversationID | string | 会话ID                              |      |
+| msgIDs         | string | 待删除消息的 clientMsgID 字符串数组转换的string |      |
 
 | 返回参数 | 类型   | 说明                       | 备注 |
 | -------- | ------ | -------------------------- | ---- |
@@ -853,7 +853,7 @@ DELETE FROM `chat_logs_si_7788_7789` WHERE client_msg_id IN ('063031b86f8e503c60
 
 
 
-- updateSingleMessageHasRead
+- updateSingleMessageHasRead(暂未使用)
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -873,7 +873,7 @@ UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE send_id="s"  AND session_t
 
 
 
-- updateGroupMessageHasRead
+- updateGroupMessageHasRead(暂未使用)
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -891,7 +891,7 @@ UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE send_id="s"  AND session_t
 UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE session_type=3 AND client_msg_id in ("12","ds")
 ```
 
-- updateMessageStatusBySourceID
+- updateMessageStatusBySourceID(暂未使用)
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -917,11 +917,27 @@ UPDATE `chat_logs_si_7788_7789` SET `status`=4, WHERE session_type=1 AND (send_i
 
 + MarkConversationAllMessageAsRead
 
-*没用过*
+| 输入参数           | 类型   | 说明 | 备注 |
+|----------------| ------ |--| ---- |
+| conversationID | string | 会话ID |      |
+| loginUserID        | string | 用户ID |      |
+
+
+| 返回参数    | 类型     | 说明                | 备注           |
+|---------|--------|-------------------|--------------|
+| errCode | number | 自定义即可，0成功，非0失败    |  |
+| errMsg  | string | 详细的err信息          |              |
+| data    | number | 更新影响的行数 |              |
+
+**参考sql语句说明：**
+
+```
+UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE `is_read`=0 And send_id != "7788";
+```
 
 
 
-+ deleteConversationMsgsBySeqs
++ deleteConversationMsgsBySeqs（暂未使用）
 
 | 输入参数       | 类型     | 说明                                                 | 备注 |
 | -------------- | -------- | ---------------------------------------------------- | ---- |
@@ -944,9 +960,10 @@ DELETE FROM `chat_logs_si_7788_7789` WHERE seq IN (1, 2, 3);
 
 - searchAllMessageByContentType
 
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| contentType    | number                                          | 消息类型 ||
+| 输入参数           | 类型     | 说明   |备注|
+|----------------|--------|------|-----------------------|
+| conversationID | string | 会话ID ||
+| contentType    | number | 消息类型 ||
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|

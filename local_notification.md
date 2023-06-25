@@ -40,10 +40,8 @@ UPDATE local_notification_seqs set seq = 56 where conversation_id = '10001'
 
 
 + getNotificationAllSeqs
-
-| 输入参数         | 类型   | 说明                                         | 备注              |
-| ---------------- | ------ | -------------------------------------------- | ----------------- |
-| notificationSeqs | string | NotificationSeqs（通知 Sequence 表对象数据） | 对象转换成 string |
++ 
+  **无输入参数**
 
 | 返回参数 | 类型   | 说明                       | 备注 |
 | -------- | ------ | -------------------------- | ---- |
