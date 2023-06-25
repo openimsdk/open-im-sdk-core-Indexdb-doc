@@ -97,11 +97,7 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id = "063031b86f8e503c60
 **参考sql语句说明：**
 
 ```sql
--- 1、sessionType == 1 && sourceID == d.loginUserID
-SELECT * FROM `chat_logs_si_7788_7789` WHERE send_id = "812146266" And  recv_id = "812146266" AND status <=1 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
--- 注：其中status固定为3
--- 2、其他场景
-SELECT * FROM `chat_logs_si_7788_7789` WHERE send_id = "812146266" OR  recv_id = "812146266" AND status <=1 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
 ```
 
 
@@ -168,13 +164,12 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE seq IN (1,2,3,4) ORDER BY send_time
 
 - getMessageListNoTime
 
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| sourceID                                     | string  | 关于某人的ID也可能是写扩散模式下群ID|
-| sessionType | number                                     | 会话类型，单聊1、读扩散群2、大群为3      ||
-| count | number | 获取消息的数量 ||
-| isReverse | boolean | 消息为正向拉取还是反向拉取|默认情况为false，即为正向拉取（从新消息到老消息），order by 后面的排序规则为send_time DESC 降序排列，当为true的情况，即为反向拉取，order by 后面的排序规则为send_time ASC 升序排列|
-| loginUserID | string | 用户登录ID |需要根据会话的类型和sourceID判断，当sessionType为1并且sourceID为登录者ID时候，搜索sql为 AND|
+| 输入参数           | 类型                                                         | 说明                  |备注|
+|----------------| ------------------------------------------------------------ |---------------------|-----------------------|
+| conversationID | string  | 会话ID                |
+| count          | number | 获取消息的数量             ||
+| isReverse      | boolean | 消息为正向拉取还是反向拉取       |默认情况为false，即为正向拉取（从新消息到老消息），order by 后面的排序规则为send_time DESC 降序排列，当为true的情况，即为反向拉取，order by 后面的排序规则为send_time ASC 升序排列|
+
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
