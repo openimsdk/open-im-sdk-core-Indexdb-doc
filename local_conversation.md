@@ -152,7 +152,7 @@ SELECT conversation_id FROM `local_conversations` WHERE conversation_type = 1
 参考 SQL 语句说明：
 
 ```
-SELECT conversation_id FROM `local_conversations` WHERE conversation_type = 1
+SELECT conversation_id FROM `local_conversations`;
 ```
 
 
@@ -207,7 +207,7 @@ VALUES ("123141", 0, "123", "12", "1213121", "", 0, 0, 0, "", 1666851360, "", 16
 
 
 
-- UpdateOrCreateConversations
+- UpdateOrCreateConversations(暂时忽略)
 
 | 输入参数         | 类型                     | 说明             | 备注 |
 | ---------------- | ------------------------ | ---------------- | ---- |
