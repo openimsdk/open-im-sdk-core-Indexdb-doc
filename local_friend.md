@@ -121,6 +121,7 @@ WHERE owner_user_id = "3433303585"
 
 | 输入参数   | 类型  | 说明  | 备注     |
 |--------|-----|-----|--------|
+|ownerUserID    | string |     |     |
 | offset | int |     | 跳过数据行数 |
 | count  | int |     | 取出数据数量 |
 
