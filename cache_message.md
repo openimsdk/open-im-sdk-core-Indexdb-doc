@@ -1,3 +1,8 @@
+# Js实现db接口简要说明(已废弃)
+## 表结构以及需要实现的接口说明
+>所有的db接口返回值，统一由errCode,errMsg,data字段转换为字符串异步返回
+### 消息扩展信息表
+
 **参考sql语句说明：**
 ```sql
 CREATE TABLE "temp_cache_local_chat_logs" (
