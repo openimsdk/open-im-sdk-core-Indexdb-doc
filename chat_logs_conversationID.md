@@ -2,9 +2,13 @@
 ## 表结构以及需要实现的接口说明
 >所有的db接口返回值，统一由errCode,errMsg,data字段转换为字符串异步返回
 ### 消息表(写扩散消息表)
-- 表名：local_chat_logs
+###  读扩散消息表
+- 表名：chat_logs_si_7788_7789
+>注：读扩散表为动态生成，表名也是，规则为chat_logs_+conversationID，
+原有代码中，是在GetMessage和GetMessageBySeq和GetMessageListNoTime这三个函数中进行判断，如果没有就动态生成该表
+
 ```sqlite
-CREATE TABLE `local_chat_logs` (
+CREATE TABLE `chat_logs_si_7788_7789` (
   `client_msg_id` char(32),
   `server_msg_id` char(32),
   `send_id` char(32),
@@ -54,7 +58,7 @@ CREATE TABLE `local_chat_logs` (
 **参考sql语句说明：**
 
 ```sql
-SELECT * FROM `local_chat_logs` WHERE client_msg_id = "063031b86f8e503c6038efb2b835f216" LIMIT 1
+SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id = "063031b86f8e503c6038efb2b835f216" LIMIT 1
 ```
 - getAlreadyExistSeqList
 
@@ -94,10 +98,10 @@ SELECT * FROM `local_chat_logs` WHERE client_msg_id = "063031b86f8e503c6038efb2b
 
 ```sql
 -- 1、sessionType == 1 && sourceID == d.loginUserID
-SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" And  recv_id = "812146266" AND status <=1 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE send_id = "812146266" And  recv_id = "812146266" AND status <=1 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
 -- 注：其中status固定为3
 -- 2、其他场景
-SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" OR  recv_id = "812146266" AND status <=1 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE send_id = "812146266" OR  recv_id = "812146266" AND status <=1 And session_type = 3 And send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
 ```
 
 
@@ -116,7 +120,7 @@ SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" OR  recv_id = "81214
 参考 SQL 语句说明：
 
 ```sql
-SELECT * FROM `local_chat_logs` WHERE seq = 1000 LIMIT 1;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE seq = 1000 LIMIT 1;
 ```
 
 
@@ -137,7 +141,7 @@ SELECT * FROM `local_chat_logs` WHERE seq = 1000 LIMIT 1;
 **参考sql语句说明：**
 
 ```
-SELECT * FROM `local_chat_logs` WHERE client_msg_id IN ("063031b86f8e503c6038efb2b835f216","063031b86f8e503c6038efb2b835f217") ORDER BY send_time DESC
+SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id IN ("063031b86f8e503c6038efb2b835f216","063031b86f8e503c6038efb2b835f217") ORDER BY send_time DESC
 ```
 
 
@@ -157,7 +161,7 @@ SELECT * FROM `local_chat_logs` WHERE client_msg_id IN ("063031b86f8e503c6038efb
 参考 SQL 语句说明：
 
 ```
-SELECT * FROM `local_chat_logs` WHERE seq IN (1,2,3,4) ORDER BY send_time DESC;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE seq IN (1,2,3,4) ORDER BY send_time DESC;
 ```
 
 
@@ -182,10 +186,10 @@ SELECT * FROM `local_chat_logs` WHERE seq IN (1,2,3,4) ORDER BY send_time DESC;
 
 ```sql
 -- 1、sessionType == 1 && sourceID == d.loginUserID
-SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" And  recv_id = "812146266" AND status <=3 And session_type = 1  ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE send_id = "812146266" And  recv_id = "812146266" AND status <=3 And session_type = 1  ORDER BY send_time DESC LIMIT 30;
 -- 注：其中status固定为3
 -- 2、其他场景
-SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" OR  recv_id = "812146266" AND status <=3 And session_type = 1  ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE send_id = "812146266" OR  recv_id = "812146266" AND status <=3 And session_type = 1  ORDER BY send_time DESC LIMIT 30;
 ```
 
 [comment]: <> "- setChatLogFailedStatus"
@@ -212,7 +216,7 @@ SELECT * FROM `local_chat_logs` WHERE send_id = "812146266" OR  recv_id = "81214
 **参考 sql 语句说明：**
 
 ```
-SELECT IFNULL(MAX(seq), 0) FROM `local_chat_logs` WHERE conversation_id = "conversation_id" AND send_id != "login_user_id";
+SELECT IFNULL(MAX(seq), 0) FROM `chat_logs_si_7788_7789` WHERE conversation_id = "conversation_id" AND send_id != "login_user_id";
 ```
 
 
@@ -232,7 +236,7 @@ SELECT IFNULL(MAX(seq), 0) FROM `local_chat_logs` WHERE conversation_id = "conve
 **参考sql语句说明：**
 
 ```sql
-select * from local_chat_logs where status = 1;
+select * from chat_logs_si_7788_7789 where status = 1;
 -- 消息状态：
 -- 	MsgStatusSending     = 1
 -- 	MsgStatusSendSuccess = 2
@@ -256,7 +260,7 @@ select * from local_chat_logs where status = 1;
 **参考sql语句说明：**
 
 ```sql
-SELECT IFNULL(max(seq),0) FROM `local_chat_logs`;
+SELECT IFNULL(max(seq),0) FROM `chat_logs_si_7788_7789`;
 ```
 
 
@@ -278,7 +282,7 @@ SELECT IFNULL(max(seq),0) FROM `local_chat_logs`;
 **参考sql语句说明：**
 
 ```sql
- UPDATE `local_chat_logs` SET `server_msg_id`="75dee2fbd6c4f28e7895f8410be4984f",`status`=2,`send_time`=1663658950513 WHERE client_msg_id="985261c57242cf647753839854038154" And seq=0;
+ UPDATE `chat_logs_si_7788_7789` SET `server_msg_id`="75dee2fbd6c4f28e7895f8410be4984f",`status`=2,`send_time`=1663658950513 WHERE client_msg_id="985261c57242cf647753839854038154" And seq=0;
 ```
 
 BatchUpdateMessageList
@@ -299,7 +303,7 @@ BatchUpdateMessageList
 **参考sql语句说明：**
 
 ```sql
- UPDATE `local_chat_logs` SET `server_msg_id`="8c6dc2ace8ff5706880018de43916c39",`recv_id`="2041671273",`session_type`=1,`status`=2,`seq`=14 WHERE `client_msg_id` = "6edad80249cc0cf626edb88e64f8fb6d";
+ UPDATE `chat_logs_si_7788_7789` SET `server_msg_id`="8c6dc2ace8ff5706880018de43916c39",`recv_id`="2041671273",`session_type`=1,`status`=2,`seq`=14 WHERE `client_msg_id` = "6edad80249cc0cf626edb88e64f8fb6d";
 ```
 
 - batchInsertMessageList
@@ -317,7 +321,7 @@ BatchUpdateMessageList
 **参考sql语句说明：**
 
 ```sql
- INSERT INTO `local_chat_logs` (`client_msg_id`,`server_msg_id`,`send_id`,`recv_id`,`sender_platform_id`,`sender_nick_name`,`sender_face_url`,`session_type`,`msg_from`,`content_type`,`content`,`is_read`,`status`,`seq`,`send_time`,`create_time`,`attached_info`,`ex`) VALUES ("01d22adafe309482391fc54f728c96a7","5cb3ecb6092843e9376fd229a72b24e0","3045326383","openIMAdmin",0,"","",1,200,1303,"{\"detail\":\"CgozMDQ1MzI2Mzgz\",\"defaultTips\":\"remove a blocked user\",\"jsonDetail\":\"{\\"userID\\":\\"3045326383\\"}\"}",false,6,1,1663557189653,1663557189652,"",""),("3492347bc55280d3c5c32398f78eae50","2b0a01eff07f502da31751fb459966bc","3045326383","openIMAdmin",0,"","",1,200,1303,"{\"detail\":\"CgozMDQ1MzI2Mzgz\",\"defaultTips\":\"remove a blocked user\",\"jsonDetail\":\"{\\"userID\\":\\"3045326383\\"}\"}",false,6,2,1663557324330,1663557324329,"","");
+ INSERT INTO `chat_logs_si_7788_7789` (`client_msg_id`,`server_msg_id`,`send_id`,`recv_id`,`sender_platform_id`,`sender_nick_name`,`sender_face_url`,`session_type`,`msg_from`,`content_type`,`content`,`is_read`,`status`,`seq`,`send_time`,`create_time`,`attached_info`,`ex`) VALUES ("01d22adafe309482391fc54f728c96a7","5cb3ecb6092843e9376fd229a72b24e0","3045326383","openIMAdmin",0,"","",1,200,1303,"{\"detail\":\"CgozMDQ1MzI2Mzgz\",\"defaultTips\":\"remove a blocked user\",\"jsonDetail\":\"{\\"userID\\":\\"3045326383\\"}\"}",false,6,1,1663557189653,1663557189652,"",""),("3492347bc55280d3c5c32398f78eae50","2b0a01eff07f502da31751fb459966bc","3045326383","openIMAdmin",0,"","",1,200,1303,"{\"detail\":\"CgozMDQ1MzI2Mzgz\",\"defaultTips\":\"remove a blocked user\",\"jsonDetail\":\"{\\"userID\\":\\"3045326383\\"}\"}",false,6,2,1663557324330,1663557324329,"","");
 ```
 
 - insertMessage
@@ -335,7 +339,7 @@ BatchUpdateMessageList
 **参考sql语句说明：**
 
 ```sql
- INSERT INTO `local_chat_logs` (`client_msg_id`,`server_msg_id`,`send_id`,`recv_id`,`sender_platform_id`,`sender_nick_name`,`sender_face_url`,`session_type`,`msg_from`,`content_type`,`content`,`is_read`,`status`,`seq`,`send_time`,`create_time`,`attached_info`,`ex`) VALUES ("6edad80249cc0cf626edb88e64f8fb6d","","3045326383","2041671273",1,"Gordon111","ic_avatar_01",1,100,101,"Single chat test3045326383:2041671273:",false,1,0,1663658716992,1663658716992,"","");
+ INSERT INTO `chat_logs_si_7788_7789` (`client_msg_id`,`server_msg_id`,`send_id`,`recv_id`,`sender_platform_id`,`sender_nick_name`,`sender_face_url`,`session_type`,`msg_from`,`content_type`,`content`,`is_read`,`status`,`seq`,`send_time`,`create_time`,`attached_info`,`ex`) VALUES ("6edad80249cc0cf626edb88e64f8fb6d","","3045326383","2041671273",1,"Gordon111","ic_avatar_01",1,100,101,"Single chat test3045326383:2041671273:",false,1,0,1663658716992,1663658716992,"","");
 ```
 
 
@@ -380,7 +384,7 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 **参考sql语句说明：**
 
 ```sql
- SELECT * FROM `local_chat_logs` WHERE session_type==1 And (send_id=="1889848740" OR recv_id=="1889848740") And send_time  between 0 and 1666766907000 AND status <=3  And content_type IN (101,106) And (content like '%1%')  ORDER BY send_time DESC LIMIT 20 OFFSET 0;
+ SELECT * FROM `chat_logs_si_7788_7789` WHERE session_type==1 And (send_id=="1889848740" OR recv_id=="1889848740") And send_time  between 0 and 1666766907000 AND status <=3  And content_type IN (101,106) And (content like '%1%')  ORDER BY send_time DESC LIMIT 20 OFFSET 0;
 ```
 
 
@@ -407,7 +411,7 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 **参考sql语句说明：**
 
 ```sql
-SELECT * FROM `local_chat_logs` WHERE session_type==1 And (send_id=="3433303585" OR recv_id=="3433303585") And send_time between 0 and 1666767929000 AND status <=3 And content_type IN (101,106) ORDER BY send_time DESC LIMIT 20 OFFSET 0;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE session_type==1 And (send_id=="3433303585" OR recv_id=="3433303585") And send_time between 0 and 1666767929000 AND status <=3 And content_type IN (101,106) ORDER BY send_time DESC LIMIT 20 OFFSET 0;
 ```
 
 
@@ -433,7 +437,7 @@ SELECT * FROM `local_chat_logs` WHERE session_type==1 And (send_id=="3433303585"
 **参考sql语句说明：**
 
 ```sql
-SELECT * FROM `local_chat_logs` WHERE send_time between 0 and 1666769211000 AND status <=3  And content_type IN (101,106)  ORDER BY send_time DESC
+SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time between 0 and 1666769211000 AND status <=3  And content_type IN (101,106)  ORDER BY send_time DESC
 ```
 
 - messageIfExists
@@ -451,7 +455,7 @@ SELECT * FROM `local_chat_logs` WHERE send_time between 0 and 1666769211000 AND 
 **参考sql语句说明：**
 
 ```sql
-SELECT count(*) FROM `local_chat_logs` WHERE client_msg_id == "xxx";
+SELECT count(*) FROM `chat_logs_si_7788_7789` WHERE client_msg_id == "xxx";
 ```
 
 - isExistsInErrChatLogBySeq
@@ -487,7 +491,7 @@ SELECT count(*) FROM `local_err_chat_logs` WHERE seq == 1;
 **参考sql语句说明：**
 
 ```sql
-SELECT count(*) FROM `local_chat_logs` WHERE seq == 1;
+SELECT count(*) FROM `chat_logs_si_7788_7789` WHERE seq == 1;
 ```
 
 - UpdateGroupMessageHasRead
@@ -504,7 +508,7 @@ SELECT count(*) FROM `local_chat_logs` WHERE seq == 1;
 
 
 ```sql
-UPDATE `local_chat_logs` SET `is_read`=1 WHERE session_type=2 AND client_msg_id in ("a43fe26849cf4f9225262297967979f1")    
+UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE session_type=2 AND client_msg_id in ("a43fe26849cf4f9225262297967979f1")    
 ```
 
 
@@ -522,7 +526,7 @@ UPDATE `local_chat_logs` SET `is_read`=1 WHERE session_type=2 AND client_msg_id 
 
 **参考sql语句说明：**
 ```sql
-SELECT * FROM `local_chat_logs` WHERE client_msg_id IN ("a43fe26849cf4f9225262297967979f1") ORDER BY send_time DESC
+SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id IN ("a43fe26849cf4f9225262297967979f1") ORDER BY send_time DESC
 ```
 
 - updateMsgSenderNickname
@@ -542,7 +546,7 @@ SELECT * FROM `local_chat_logs` WHERE client_msg_id IN ("a43fe26849cf4f922526229
 
 **参考sql语句说明：**
 ```sql
-UPDATE `local_chat_logs` SET `sender_nick_name`="xx" WHERE send_id = "ss" and session_type = 1 and sender_nick_name != "xx"
+UPDATE `chat_logs_si_7788_7789` SET `sender_nick_name`="xx" WHERE send_id = "ss" and session_type = 1 and sender_nick_name != "xx"
 ```
 
 - updateMsgSenderFaceURL
@@ -562,7 +566,7 @@ UPDATE `local_chat_logs` SET `sender_nick_name`="xx" WHERE send_id = "ss" and se
 
 **参考sql语句说明：**
 ```sql
-UPDATE `local_chat_logs` SET `sender_face_url`="xx" WHERE send_id = "ss" and session_type = 1 and sender_face_url != "xx"
+UPDATE `chat_logs_si_7788_7789` SET `sender_face_url`="xx" WHERE send_id = "ss" and session_type = 1 and sender_face_url != "xx"
 ```
 
 - updateMsgSenderFaceURLAndSenderNickname
@@ -583,7 +587,7 @@ UPDATE `local_chat_logs` SET `sender_face_url`="xx" WHERE send_id = "ss" and ses
 
 **参考sql语句说明：**
 ```sql
-UPDATE `local_chat_logs` SET `sender_face_url`="xx",`sender_nick_name`="" WHERE send_id = "ss" and session_type = 1
+UPDATE `chat_logs_si_7788_7789` SET `sender_face_url`="xx",`sender_nick_name`="" WHERE send_id = "ss" and session_type = 1
 ```
 
 
@@ -602,7 +606,7 @@ UPDATE `local_chat_logs` SET `sender_face_url`="xx",`sender_nick_name`="" WHERE 
 **参考sql语句说明：**
 
 ```sql
-SELECT `seq` FROM `local_chat_logs` WHERE client_msg_id="ss"  LIMIT 1
+SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE client_msg_id="ss"  LIMIT 1
 ```
 
 - getMsgSeqListByGroupID
@@ -620,7 +624,7 @@ SELECT `seq` FROM `local_chat_logs` WHERE client_msg_id="ss"  LIMIT 1
 **参考sql语句说明：**
 
 ```sql
-SELECT `seq` FROM `local_chat_logs` WHERE recv_id="ss"
+SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE recv_id="ss"
 ```
 
 
@@ -639,7 +643,7 @@ SELECT `seq` FROM `local_chat_logs` WHERE recv_id="ss"
 **参考sql语句说明：**
 
 ```sql
-SELECT `seq` FROM `local_chat_logs` WHERE recv_id="ss" or send_id="ss"
+SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE recv_id="ss" or send_id="ss"
 ```
 
 - getMsgSeqListBySelfUserID
@@ -657,7 +661,7 @@ SELECT `seq` FROM `local_chat_logs` WHERE recv_id="ss" or send_id="ss"
 **参考sql语句说明：**
 
 ```sql
-    SELECT `seq` FROM `local_chat_logs` WHERE recv_id="ss" and send_id="ss"
+    SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE recv_id="ss" and send_id="ss"
 ```
 
 local_err_chat_logs表
@@ -748,7 +752,7 @@ SELECT `seq` FROM `local_err_chat_logs`
 | data      | []uint32                                          |  没有返回空列表|
 
 ```sql
-UPDATE `local_chat_logs` SET `content`="",`status`=4
+UPDATE `chat_logs_si_7788_7789` SET `content`="",`status`=4
 ```
 
 
@@ -764,7 +768,7 @@ UPDATE `local_chat_logs` SET `content`="",`status`=4
 | data      | []uint32                                          |  没有返回空列表|
 
 ```sql
-SELECT `seq` FROM `local_chat_logs` WHERE status != 4
+SELECT `seq` FROM `chat_logs_si_7788_7789` WHERE status != 4
 ```
 
 
@@ -784,7 +788,7 @@ SELECT `seq` FROM `local_chat_logs` WHERE status != 4
 **参考sql语句说明：**
 
 ```
-DELETE FROM `local_chat_logs` WHERE 1=1;
+DELETE FROM `chat_logs_si_7788_7789` WHERE 1=1;
 ```
 
 
@@ -803,7 +807,7 @@ DELETE FROM `local_chat_logs` WHERE 1=1;
 **参考sql语句说明：**
 
 ```
-UPDATE `local_chat_logs` SET `status` = 2 WHERE (1 = 1) AND (`conversation_id` = 'conversationID');
+UPDATE `chat_logs_si_7788_7789` SET `status` = 2 WHERE (1 = 1) AND (`conversation_id` = 'conversationID');
 ```
 
 
@@ -848,7 +852,7 @@ UPDATE `local_chat_logs` SET `status` = 2 WHERE (1 = 1) AND (`conversation_id` =
 **参考sql语句说明：**
 
 ```
-DELETE FROM `local_chat_logs` WHERE client_msg_id IN ('063031b86f8e503c6038efb2b835f216', '063031b86f8e503c6038efb2b835f217', '063031b86f8e503c6038efb2b835f218');
+DELETE FROM `chat_logs_si_7788_7789` WHERE client_msg_id IN ('063031b86f8e503c6038efb2b835f216', '063031b86f8e503c6038efb2b835f217', '063031b86f8e503c6038efb2b835f218');
 ```
 
 
@@ -869,7 +873,7 @@ DELETE FROM `local_chat_logs` WHERE client_msg_id IN ('063031b86f8e503c6038efb2b
 | data      | []uint32                                          |  没有返回空列表|
 
 ```sql
-UPDATE `local_chat_logs` SET `is_read`=1 WHERE send_id="s"  AND session_type=1 AND client_msg_id in ("sss")
+UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE send_id="s"  AND session_type=1 AND client_msg_id in ("sss")
 ```
 
 
@@ -889,7 +893,7 @@ UPDATE `local_chat_logs` SET `is_read`=1 WHERE send_id="s"  AND session_type=1 A
 | data      | number                                          |  |
 
 ```sql
-UPDATE `local_chat_logs` SET `is_read`=1 WHERE session_type=3 AND client_msg_id in ("12","ds")
+UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE session_type=3 AND client_msg_id in ("12","ds")
 ```
 
 - updateMessageStatusBySourceID
@@ -909,9 +913,9 @@ UPDATE `local_chat_logs` SET `is_read`=1 WHERE session_type=3 AND client_msg_id 
 
 ```sql
 -- 1、sessionType == 1 && sourceID == d.loginUserID
-UPDATE `local_chat_logs` SET `status`=4, WHERE session_type=1 AND send_id= "ss" AND recv_id="ss"
+UPDATE `chat_logs_si_7788_7789` SET `status`=4, WHERE session_type=1 AND send_id= "ss" AND recv_id="ss"
 -- 2、
-UPDATE `local_chat_logs` SET `status`=4, WHERE session_type=1 AND (send_id= "ss" or recv_id="ss")
+UPDATE `chat_logs_si_7788_7789` SET `status`=4, WHERE session_type=1 AND (send_id= "ss" or recv_id="ss")
 ```
 
 
@@ -938,7 +942,7 @@ UPDATE `local_chat_logs` SET `status`=4, WHERE session_type=1 AND (send_id= "ss"
 **参考 sql 语句说明：**
 
 ```sql
-DELETE FROM `local_chat_logs` WHERE seq IN (1, 2, 3);
+DELETE FROM `chat_logs_si_7788_7789` WHERE seq IN (1, 2, 3);
 ```
 
 
@@ -957,7 +961,7 @@ DELETE FROM `local_chat_logs` WHERE seq IN (1, 2, 3);
 **参考sql语句说明：**
 
 ```sql
-SELECT * FROM `local_chat_logs` WHERE content_type = 114
+SELECT * FROM `chat_logs_si_7788_7789` WHERE content_type = 114
 
 ```
 
