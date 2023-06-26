@@ -76,6 +76,9 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id = "063031b86f8e503c60
 | errMsg   | string | 详细的错误信息                               |      |
 | data     | string | 已经存在的序列号列表 整型数组转换后的string，如果没有则返回空字符串 |      |
 
+```sql
+SELECT seq FROM `chat_logs_si_7788_7789` WHERE seq IN (1,2,3,4);
+```
 
 
 - getMessageList
