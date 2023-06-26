@@ -438,7 +438,7 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time between 0 and 16667679290
 **参考sql语句说明：**
 
 ```sql
-SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time between 0 and 1666769211000 AND status <=3  And content_type IN (101,106)  ORDER BY send_time DESC
+SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time between 0 and 1666769211000 AND status <=3  And content_type IN (101,106) And (content like '%1%' or content liken '%2%') ORDER BY send_time DESC
 ```
 
 - messageIfExists（暂未使用）
