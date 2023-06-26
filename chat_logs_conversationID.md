@@ -399,7 +399,6 @@ SELECT * FROM `local_sg_chat_logs_4280368097` WHERE client_msg_id IN ("d9ef1e4e6
 | contentType                                     | string | 消息类型列表，为整型数组转换后的string|
 | startTime | number | 开始时间戳 |
 | endTime | number | 结束时间戳 |
-| sessionType | number | 会话类型 | 不能填3
 | offset | number | 偏移数 | 
 | count | number | 获取总数 |
 
