@@ -787,7 +787,7 @@ UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE `seq` IN (1,2) And send_id
 
 
 
-+ markConversationMessageAsRead
++ markConversationMessageAsReadDB
 
 | 输入参数           | 类型   | 说明 | 备注 |
 |----------------| ------ |--| ---- |
