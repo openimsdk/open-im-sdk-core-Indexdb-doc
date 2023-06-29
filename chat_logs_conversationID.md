@@ -27,6 +27,7 @@ CREATE TABLE `chat_logs_si_7788_7789` (
   `create_time` int,
   `attached_info` varchar(1024),
   `ex` varchar(1024),
+  `local_ex` varchar(1024),
   `is_react` tinyint(1),
   `is_external_extensions` tinyint(1),
   `msg_first_modify_time` int,

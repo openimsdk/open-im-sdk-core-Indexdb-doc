@@ -30,7 +30,10 @@ create table local_conversations
     is_not_in_group          numeric,
     update_unread_count_time INTEGER,
     attached_info            varchar(1024),
-    ex                       varchar(1024)
+    ex                       varchar(1024),
+    `max_seq` integer,
+    `min_seq` integer,
+    `has_read_seq` integer
 );
 
 create index index_latest_msg_send_time
