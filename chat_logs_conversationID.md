@@ -132,11 +132,11 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE seq = 1000 LIMIT 1;
 | conversationID | string   | 会话 ID |      |
 | msgIDs         | []string | 消息 ID |      |
 
-| 返回参数 | 类型           | 说明                           | 备注                           |
-| -------- | -------------- | ------------------------------ | ------------------------------ |
-| errCode  | number         | 自定义即可，0成功，非0失败     | 如果获取不到消息也需要返回错误 |
-| errMsg   | string         | 详细的err信息                  |                                |
-| data     | []LocalChatLog | LocalChatLog（消息表对象数据） | 对象转换成 string              |
+| 返回参数 | 类型     | 说明                    | 备注                           |
+| -------- |--------|-----------------------| ------------------------------ |
+| errCode  | number | 自定义即可，0成功，非0失败        | 如果获取不到消息也需要返回错误 |
+| errMsg   | string | 详细的err信息              |                                |
+| data     | string | LocalChatLog（消息表对象数组） | 对象转换成 string              |
 
 **参考sql语句说明：**
 
