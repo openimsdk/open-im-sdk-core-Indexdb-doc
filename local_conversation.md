@@ -33,7 +33,9 @@ create table local_conversations
     ex                       varchar(1024),
     `max_seq` integer,
     `min_seq` integer,
-    `has_read_seq` integer
+    `has_read_seq` integer,
+    `msg_destruct_time` integer DEFAULT 604800,
+    `is_msg_destruct` numeric DEFAULT false,
 );
 
 create index index_latest_msg_send_time
