@@ -28,11 +28,11 @@ CREATE TABLE "local_uploads"
 |----------|--------|----|----|
 | partHash | string |    |    |
 
-| 返回参数    | 类型     | 说明                                 | 备注          |
-|---------|--------|------------------------------------|-------------|
-| errCode | number | 自定义即可，0成功，非0失败                     | 如果获取不到消息也需要返回错误            |
-| errMsg  | string | 详细的err信息                           |             |
-| data    | string | *model_struct.LocalUpload  （表对象数据） | 对象转换成string |
+| 返回参数    | 类型     | 说明                                 | 备注                |
+|---------|--------|------------------------------------|-------------------|
+| errCode | number | 自定义即可，0成功，非0失败                     | 如果获取不到上传信息也需要返回错误 |
+| errMsg  | string | 详细的err信息                           |                   |
+| data    | string | *model_struct.LocalUpload  （表对象数据） | 对象转换成string       |
 
 ```sqlite
 SELECT *
