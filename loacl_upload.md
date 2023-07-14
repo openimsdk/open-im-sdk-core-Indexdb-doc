@@ -13,7 +13,7 @@ CREATE TABLE "local_uploads"
 (
     "part_hash"   text,
     "upload_id"   varchar(1000),
-    "info"        varchar(2000),
+    "upload_info"        varchar(2000),
     "expire_time" integer,
     "create_time" integer,
     PRIMARY KEY ("part_hash")
@@ -51,7 +51,7 @@ LIMIT 1
 | errMsg  | string | 详细的err信息       |    |
 
 ```sqlite
-INSERT INTO ` local_uploads ` ( ` part_hash `, ` upload_id `, ` info `, ` expire_time `, ` create_time ` )
+INSERT INTO ` local_uploads ` ( ` part_hash `, ` upload_id `, ` upload_info `, ` expire_time `, ` create_time ` )
 VALUES
     ( "6213597e9474e0120349f7fef85af49b", "jUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uw", "2d16d625d1cbecc0", 1689266361896, 1689241161896 )
 ```
@@ -69,7 +69,7 @@ VALUES
 
 ```sqlite
 UPDATE `local_uploads`
-SET `upload_id`= "jUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uw",`info`= "2d16d625d1cbecc0",`expire_time`= 1689266558446,`create_time`= 1689241358446
+SET `upload_id`= "jUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uw",`upload_info`= "2d16d625d1cbecc0",`expire_time`= 1689266558446,`create_time`= 1689241358446
 WHERE
     `part_hash` = "6213597e9474e0120349f7fef85af49b"
 ```
