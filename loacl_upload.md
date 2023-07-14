@@ -24,7 +24,9 @@ CREATE TABLE "local_uploads"
 
 - getUpload
 
-**无输入参数**
+| 输入参数     | 类型     | 说明 | 备注 |
+|----------|--------|----|----|
+| partHash | string |    |    |
 
 | 返回参数    | 类型     | 说明                                 | 备注          |
 |---------|--------|------------------------------------|-------------|
@@ -34,7 +36,7 @@ CREATE TABLE "local_uploads"
 
 ```sqlite
 SELECT *
-FROM ` local_uploads `
+FROM `local_uploads`
 WHERE part_hash = '6213597e9474e0120349f7fef85af49b'
 LIMIT 1
 ```
@@ -51,9 +53,9 @@ LIMIT 1
 | errMsg  | string | 详细的err信息       |    |
 
 ```sqlite
-INSERT INTO ` local_uploads ` ( ` part_hash `, ` upload_id `, ` info `, ` expire_time `, ` create_time ` )
-VALUES
-    ( "6213597e9474e0120349f7fef85af49b", "jUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uw", "2d16d625d1cbecc0", 1689266361896, 1689241161896 )
+INSERT INTO `local_uploads `(`part_hash `, `upload_id `, `info `, `expire_time `, `create_time `)
+VALUES ("6213597e9474e0120349f7fef85af49b", "jUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uw",
+        "2d16d625d1cbecc0", 1689266361896, 1689241161896)
 ```
 
 - updateUpload
@@ -69,9 +71,11 @@ VALUES
 
 ```sqlite
 UPDATE `local_uploads`
-SET `upload_id`= "jUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uw",`info`= "2d16d625d1cbecc0",`expire_time`= 1689266558446,`create_time`= 1689241358446
-WHERE
-    `part_hash` = "6213597e9474e0120349f7fef85af49b"
+SET `upload_id`= "jUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uwjUZG6y1wZxJusIrbBnL3uw",
+    `info`= "2d16d625d1cbecc0",
+    `expire_time`= 1689266558446,
+    `create_time`= 1689241358446
+WHERE `part_hash`= "6213597e9474e0120349f7fef85af49b"
 ```
 
 - deleteUpload
@@ -89,10 +93,8 @@ WHERE
 
 ```sqlite
 DELETE
-FROM
-    ` local_uploads `
-WHERE
-    part_hash = "6213597e9474e0120349f7fef85af49b"
+FROM `local_uploads`
+WHERE part_hash = "6213597e9474e0120349f7fef85af49b"
 ```
 
 - deleteExpireUpload
@@ -105,10 +107,7 @@ WHERE
 | errMsg  | string | 详细的err信息       |    |
 
 ```sqlite
-SELECT
-    *
-FROM
-    ` local_uploads `
-WHERE
-    expire_time <= 1689241660081
+SELECT *
+FROM `local_uploads`
+WHERE expire_time <= 1689241660081
 ```
