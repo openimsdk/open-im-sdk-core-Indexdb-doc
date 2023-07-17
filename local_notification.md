@@ -34,7 +34,10 @@ CREATE TABLE `local_notification_seqs`
 **参考sql语句说明：**
 
 ```sqlite
+先：
 UPDATE local_notification_seqs set seq = 56 where conversation_id = '10001'
+如果一行都未更新到，则：
+INSERT INTO `local_notification_seqs` (`conversation_id`, `seq`) VALUES ("10001", "56")
 ```
 
 
