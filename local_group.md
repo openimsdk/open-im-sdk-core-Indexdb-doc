@@ -221,3 +221,19 @@ UPDATE `local_groups` SET `member_count`=member_count-1 WHERE `group_id` = "grou
 SELECT DISTINCT group_id FROM local_group_members
 ```
 
+
+
++ getGroups
+ | 输入参数     | 类型                                                         | 说明 |备注|
+ | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+ | groupIDs | []string | |
+
+| 返回参数 | 类型   | 说明                       | 备注             |
+| -------- | ------ | -------------------------- | ---------------- |
+| errCode  | number | 自定义即可，0成功，非0失败 |                  |
+| errMsg   | string | 详细的err信息              |                  |
+| data     | string | []string                   | 对象转换成string |
+
+```sqlite
+SELECT * FROM local_groups where group_id in ("id1", "id2");
+```

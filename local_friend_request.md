@@ -164,3 +164,23 @@ WHERE from_user_id = "457"
   AND to_user_id = "123"
 LIMIT 1
 ```
+
+- GetBothFriendReq
+
+| 输入参数     | 类型     | 说明 | 备注       |
+| --------- |--------| ----- |----------|
+|fromUserID  | string | ||
+|toUserID  | string | ||
+
+
+| 返回参数     | 类型            | 说明 | 备注  |
+| --------- | ------------ | ----- |-----|
+| errCode      | number   | 自定义即可，0成功，非0失败 |   获取不到报错  |
+| errMsg     | string     | 详细的err信息 |     |
+| data     | string | []string                   | 对象转换成string |
+
+
+
+```sqlite
+SELECT * FROM `friend_requests` WHERE (from_user_id = '3489932643' AND to_user_id = '5345125128') OR (from_user_id = '5345125128' AND to_user_id = '3489932643')
+```
