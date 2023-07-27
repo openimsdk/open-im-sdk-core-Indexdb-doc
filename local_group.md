@@ -224,6 +224,7 @@ SELECT DISTINCT group_id FROM local_group_members
 
 
 + getGroups
+
  | 输入参数     | 类型                                                         | 说明 |备注|
  | --------- | ------------------------------------------------------------ | ----- |-----------------------|
  | groupIDs | []string | |
