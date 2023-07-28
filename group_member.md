@@ -389,3 +389,21 @@ groupID不为""SELECT * FROM `local_group_members` WHERE ( user_id like "%1%" or
 groupID为""  SELECT * FROM `local_group_members` WHERE user_id like "%1%" or nickname like "%1%"  ORDER BY join_time DESC LIMIT 20 OFFSET 10
 SELECT * FROM `local_group_members` WHERE user_id like "%1%"  ORDER BY join_time DESC LIMIT 20 OFFSET 10
 ```
+
+
+- GetUserJoinedGroupIDs
+
+| 输入参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| userID | string|  |
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败| |
+| errMsg     | string                                          | 详细的err信息 ||
+| data      | string                                          |   []string||
+
+**参考sql语句说明：**
+```sql
+select group_id from `local_group_members` where user_id = ?;
+```
