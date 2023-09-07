@@ -21,9 +21,9 @@ CREATE TABLE `local_stranger`
 #### 接口说明：
 - GetStrangerInfo
 
-| 输入参数   | 类型       | 说明     | 备注 |
-|--------|----------|--------|----|
-| userID | []string | 用户ID列表 |    |
+| 输入参数   | 类型     | 说明           | 备注 |
+|--------|--------|--------------|----|
+| userID | string | 用户ID列表(列表对象) |    |
 
 | 返回参数    | 类型     | 说明                 | 备注                |
 |---------|--------|--------------------|-------------------|
@@ -40,9 +40,9 @@ SELECT * FROM `local_stranger` WHERE user_id in ("3045326383");
 
 - SetStrangerInfo
 
-| 输入参数     | 类型       | 说明                          | 备注               |
-|----------|----------|-----------------------------|------------------|
-| stranger | []string | 列表对象LocalStranger（陌生人表对象数据） | 对象转换成string      |
+| 输入参数     | 类型     | 说明                          | 备注               |
+|----------|--------|-----------------------------|------------------|
+| stranger | string | 列表对象LocalStranger（陌生人表对象数据） | 对象转换成string      |
 
 | 返回参数    | 类型     | 说明             | 备注 |
 |---------|--------|----------------|----|
@@ -52,9 +52,12 @@ SELECT * FROM `local_stranger` WHERE user_id in ("3045326383");
 **参考sql语句说明：**
 
 ```sql
-DELETE FROM `users` WHERE 1=1;
-INSERT INTO `local_stranger`
-    (`user_id`, `name`, `face_url`, `create_time`, `app_manger_level`, `ex`, `attached_info`, `global_recv_msg_opt`)
-VALUES ('example_user', 'bantanger', 'http://example.com/face.jpg', 1618906879, 18, 'example', 'info', 1);
+IF EXISTS (SELECT * FROM local_stranger WHERE user_id = "3045326383")
+UPDATE local_stranger
+SET column1 = value1, column2 = value2, ...
+    WHERE user_id = "3045326383";
+ELSE 
+    INSERT INTO your_table (column1, column2, ...)
+    VALUES (value1, value2, ...);
 ```
 
