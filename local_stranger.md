@@ -42,7 +42,7 @@ SELECT * FROM `local_stranger` WHERE user_id in ("3045326383");
 
 | 输入参数     | 类型     | 说明                          | 备注               |
 |----------|--------|-----------------------------|------------------|
-| stranger | string | 列表对象LocalStranger（陌生人表对象数据） | 对象转换成string      |
+| stranger | string | 数组LocalStranger（陌生人表对象数组数据） | 对象转换成string      |
 
 | 返回参数    | 类型     | 说明             | 备注 |
 |---------|--------|----------------|----|
