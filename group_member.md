@@ -146,12 +146,13 @@ SELECT * FROM `local_group_members` WHERE group_id = "x"
 
 - getGroupMemberListSplit
 
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| groupID     |string                                       |   |       |
-| filter     |int                                       |   | 为0时,role_level>0。为1,2,3时，role_level=1,2,3, 为4时 role_level = 1 OR role_level = 3   |
-| offset     |int                                       |  偏移 |   |
-| count     |int                                       |  获取总数 |      |
+| 输入参数     | 类型                                                         | 说明 | 备注 |
+| --------- | ------------------------------------------------------------ | ----- |--|
+| groupID     |string                                       |   |  |
+| filter     |int                                       |   | 总共7种取值，下面说明 |
+| offset     |int                                       |  偏移 |  |
+| count     |int                                       |  获取总数 |  |
+| loginUserID  | string | |登陆者实例ID |
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -161,9 +162,21 @@ SELECT * FROM `local_group_members` WHERE group_id = "x"
 
 **参考sql语句说明：**
 ```sql
-    filter为0: SELECT * FROM `local_group_members` WHERE group_id = "x" And role_level > 0 ORDER BY role_level DESC,join_time ASC LIMIT 20 OFFSET 10
-    filter为1: SELECT * FROM `local_group_members` WHERE group_id = "x" And role_level = 1 ORDER BY join_time ASC LIMIT 20 OFFSET 10
-    filter为4: SELECT * FROM `local_group_members` WHERE group_id = "x" And ( role_level = 1 OR role_level = 3 )  ORDER BY role_level DESC,join_time ASC LIMIT 20 OFFSET 10
+  filter为0:(获取所有的群成员)
+   SELECT * FROM `local_group_members` WHERE group_id = "x" ORDER BY role_level DESC,join_time ASC LIMIT 20 OFFSET 10
+  filter为1:(获取群主) 
+   SELECT * FROM `local_group_members` WHERE group_id = "x" And role_level = 100  LIMIT 20 OFFSET 10
+  filter为2:(获取群管理员)
+   SELECT * FROM `local_group_members` WHERE group_id = "x" And role_level = 60 ORDER BY join_time ASC LIMIT 20 OFFSET 10
+  filter为3:(获取普通成员)
+   SELECT * FROM `local_group_members` WHERE group_id = "x" And role_level = 20 ORDER BY join_time ASC LIMIT 20 OFFSET 10
+  filter为4:(获取群管理员与普通成员)
+  SELECT * FROM `local_group_members` WHERE group_id = "x" And (role_level = 60 or role_level = 20) ORDER BY role_level DESC,join_time ASC LIMIT 20 OFFSET 10
+  filter为5:(获取群主与管理员)
+  SELECT * FROM `local_group_members` WHERE group_id = "x" And (role_level = 100 or role_level = 60) ORDER BY role_level DESC,join_time ASC LIMIT 20 OFFSET 10
+  filter为6:(获取群成员不包含自己,其中user_id为登陆者实例ID)
+  SELECT * FROM `local_group_members` WHERE group_id = "x" And user_id != xx  LIMIT 20 OFFSET 10
+
 ```
 
 - getGroupMemberOwnerAndAdmin
@@ -377,6 +390,7 @@ UPDATE `local_group_members` SET `nickname`="x" WHERE `group_id` = "1" AND `user
 | offset | int |
 | count|  int |
 
+
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败| |
@@ -385,9 +399,9 @@ UPDATE `local_group_members` SET `nickname`="x" WHERE `group_id` = "1" AND `user
 
 **参考sql语句说明：**
 ```sql
-groupID不为""SELECT * FROM `local_group_members` WHERE ( user_id like "%1%" or nickname like "%1%"  )  and group_id IN ("sad1")  ORDER BY join_time DESC LIMIT 20 OFFSET 10
-groupID为""  SELECT * FROM `local_group_members` WHERE user_id like "%1%" or nickname like "%1%"  ORDER BY join_time DESC LIMIT 20 OFFSET 10
-SELECT * FROM `local_group_members` WHERE user_id like "%1%"  ORDER BY join_time DESC LIMIT 20 OFFSET 10
+groupID不为""SELECT * FROM `local_group_members` WHERE ( user_id like "%1%" or nickname like "%1%"  )  and group_id IN ("sad1")  ORDER BY role_level DESC,join_time DESC LIMIT 20 OFFSET 10
+groupID为""  SELECT * FROM `local_group_members` WHERE user_id like "%1%" or nickname like "%1%"  ORDER BY role_level DESC,join_time DESC LIMIT 20 OFFSET 10
+SELECT * FROM `local_group_members` WHERE user_id like "%1%"  ORDER BY role_level DESC,join_time DESC LIMIT 20 OFFSET 10
 ```
 
 
