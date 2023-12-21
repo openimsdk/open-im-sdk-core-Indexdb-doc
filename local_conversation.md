@@ -729,7 +729,27 @@ LIMIT 1
 select * from local_conversations;
 ```
 
+- searchConversations
 
+| 输入参数 | 类型 | 说明                         | 备注 |
+| --------- |--------|----------------------------|-----|
+|searchParam| string|搜索字段| |
+
+| 返回参数 | 类型 | 说明                         | 备注 |
+| --------- |--------|----------------------------|-----|
+| errCode | number | 自定义即可，0成功，非0失败             |获取不到报错 |
+| errMsg | string | 详细的err信息                   | |
+| data | string | []LocalConversation（表对象数据） |对象转换成string|
+
+
+**参考sql语句说明：**
+
+```sqlite
+SELECT * 
+FROM `local_conversations` 
+WHERE show_name like \"%a%\"  
+ORDER BY latest_msg_send_time DESC
+```
 
 
 

@@ -25,6 +25,7 @@ create table local_friends
 --     email            varchar(64),
     ex               varchar(1024),
     attached_info    varchar(1024),
+    is_pinned
     primary key (owner_user_id, friend_user_id)
 );
 
@@ -203,4 +204,22 @@ LIMIT 1
 SELECT *
 FROM `local_friends`
 WHERE friend_user_id IN ("123")
+```
+
+- updateColumnsFriend
+
+| 输入参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+|friendIDs    | []string |     |     |
+| args | map[string]interface{} | | |
+
+| 返回参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |--|
+| errCode | number | 自定义即可，0成功，非0失败 | 未更新到一行需要报错 |
+| errMsg | string | 详细的err信息 |  |
+
+```sqlite
+SELECT * 
+FROM `local_friends` 
+WHERE friend_user_id IN (\"2\",\"3\",\"9767777093\")
 ```
