@@ -646,7 +646,7 @@ WHERE `conversation_id` = "123141"
 ```sqlite
 SELECT `unread_count`
 FROM `local_conversations`
-WHERE recv_msg_opt < 2
+WHERE recv_msg_opt < 2 and latest_msg_send_time > 0
 ```
 
 - setMultipleConversationRecvMsgOpt
