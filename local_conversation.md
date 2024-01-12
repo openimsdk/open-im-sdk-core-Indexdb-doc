@@ -30,7 +30,12 @@ create table local_conversations
     is_not_in_group          numeric,
     update_unread_count_time INTEGER,
     attached_info            varchar(1024),
-    ex                       varchar(1024)
+    ex                       varchar(1024),
+    `max_seq` integer,
+    `min_seq` integer,
+    `has_read_seq` integer,
+    `msg_destruct_time` integer DEFAULT 604800,
+    `is_msg_destruct` numeric DEFAULT false,
 );
 
 create index index_latest_msg_send_time
@@ -115,6 +120,48 @@ SELECT *
 FROM `local_conversations`
 ```
 
+
+
++ getAllSingleConversationIDList
+
+| 输入参数 | 类型 | 说明 | 备注 |
+| -------- | ---- | ---- | ---- |
+|          |      |      |      |
+
+| 返回参数 | 类型     | 说明                                         | 备注 |
+| -------- | -------- | -------------------------------------------- | ---- |
+| errCode  | number   | 自定义即可，0成功，非0失败                   |      |
+| errMsg   | string   | 详细的err信息                                |      |
+| data     | string[] | 所有单聊会话的 conversation_id（会话ID）列表 |      |
+
+参考 SQL 语句说明：
+
+```
+SELECT conversation_id FROM `local_conversations` WHERE conversation_type = 1
+```
+
+
+
++ getAllConversationIDList
+
+| 输入参数 | 类型 | 说明 | 备注 |
+| -------- | ---- | ---- | ---- |
+|          |      |      |      |
+
+| 返回参数 | 类型     | 说明                                         | 备注 |
+| -------- | -------- | -------------------------------------------- | ---- |
+| errCode  | number   | 自定义即可，0成功，非0失败                   |      |
+| errMsg   | string   | 详细的err信息                                |      |
+| data     | string[] | 所有单聊会话的 conversation_id（会话ID）列表 |      |
+
+参考 SQL 语句说明：
+
+```
+SELECT conversation_id FROM `local_conversations`;
+```
+
+
+
 - getConversationListSplit
 
 | 输入参数 | 类型 | 说明 | 备注 |
@@ -162,6 +209,34 @@ INSERT INTO `local_conversations` (`conversation_id`, `conversation_type`, `user
 VALUES ("123141", 0, "123", "12", "1213121", "", 0, 0, 0, "", 1666851360, "", 1666851360, true, true, true, 1666851360,
         "", "")
 ```
+
+
+
+- UpdateOrCreateConversations(暂时忽略)
+
+| 输入参数         | 类型                     | 说明             | 备注 |
+| ---------------- | ------------------------ | ---------------- | ---- |
+| conversationList | []LocalConversation 对象 | 会话列表对象数组 |      |
+
+| 返回参数 | 类型   | 说明            | 备注               |
+| -------- | ------ | --------------- | ------------------ |
+| errCode  | number | 自定义即可      | 0为成功，非0为失败 |
+| errMsg   | string | 详细的 err 信息 |                    |
+| data     | string | 无              | 对象转换成string   |
+
+
+
+**参考sql语句说明：**
+
+```sql
+-- 获取所有 conversation_id
+SELECT conversation_id FROM `local_conversations` ;
+
+-- 插入会话列表
+INSERT INTO `local_conversations` (`conversation_id`,`session_type`,`source_id`,`target_id`,`unread_count`,`update_time`) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE `unread_count`=VALUES(`unread_count`);
+```
+
+
 
 - insertConversation
 
@@ -480,10 +555,10 @@ where conversation_id = "123141"
 | conversationID | string | | |
 | args | map[string]interface{} | | |
 
-| 返回参数 | 类型 | 说明 | 备注      |
-| --------- |--------| ----- |---------|
-| errCode | number | 自定义即可，0成功，非0失败 | 获取不到报错  |
-| errMsg | string | 详细的err信息 |         |
+| 返回参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |--|
+| errCode | number | 自定义即可，0成功，非0失败 | 未更新到一行需要报错 |
+| errMsg | string | 详细的err信息 |  |
 
 **参考sql语句说明：**
 
@@ -571,7 +646,7 @@ WHERE `conversation_id` = "123141"
 ```sqlite
 SELECT `unread_count`
 FROM `local_conversations`
-WHERE recv_msg_opt < 2
+WHERE recv_msg_opt < 2 and latest_msg_send_time > 0
 ```
 
 - setMultipleConversationRecvMsgOpt
@@ -636,6 +711,26 @@ WHERE conversation_id = "123141"
   AND `local_conversations`.`conversation_id` = "123141"
 LIMIT 1
 ```
+
+- getAllConversations
+
+**无输入参数**
+
+| 返回参数 | 类型 | 说明                         | 备注 |
+| --------- |--------|----------------------------|-----|
+| errCode | number | 自定义即可，0成功，非0失败             |获取不到报错 |
+| errMsg | string | 详细的err信息                   | |
+| data | string | []LocalConversation（表对象数据） |对象转换成string|
+
+
+**参考sql语句说明：**
+
+```sqlite
+select * from local_conversations;
+```
+
+
+
 
 
 

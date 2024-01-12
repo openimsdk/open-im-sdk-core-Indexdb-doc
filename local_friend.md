@@ -19,10 +19,10 @@ create table local_friends
     operator_user_id varchar(64),
     name             varchar(255),
     face_url         varchar(255),
-    gender           INTEGER,
-    phone_number     varchar(32),
-    birth            INTEGER,
-    email            varchar(64),
+--     gender           INTEGER,
+--     phone_number     varchar(32),
+--     birth            INTEGER,
+--     email            varchar(64),
     ex               varchar(1024),
     attached_info    varchar(1024),
     primary key (owner_user_id, friend_user_id)
@@ -48,17 +48,17 @@ create table local_friends
 
 ```sqlite
 INSERT INTO `local_friends` (`owner_user_id`, `friend_user_id`, `remark`, `create_time`, `add_source`,
-                             `operator_user_id`, `name`, `face_url`, `gender`, `phone_number`, `birth`, `email`, `ex`,
+                             `operator_user_id`, `name`, `face_url`, `ex`,
                              `attached_info`)
-VALUES ("123", "456", "hello", 1666778999, 0, "789", "hhhh", "", 1, "13000000000", 1666778999, "123@qq.com", "", "")
+VALUES ("123", "456", "hello", 1666778999, 0, "789", "hhhh", "", "", "")
 ```
 
 - deleteFriend
 
-| 输入参数     | 类型     | 说明  | 备注  |
-| --------- |--------|-----|-----|
-|friendUserID| string |     |     |
-|ownerUserID| string | | |
+| 输入参数         | 类型     | 说明  | 备注  |
+|--------------|--------|-----|-----|
+| friendUserID | string |     |     |
+| loginUserID  | string | | |
 
 
 | 返回参数     | 类型            | 说明 | 备注  |
@@ -91,14 +91,10 @@ SET `owner_user_id`="123",
     `operator_user_id`="789",
     `name`="hhhh",
     `face_url`="",
-    `gender`=1,
-    `phone_number`="13000000000",
-    `birth`=1666779080,
-    `email`="123@qq.com",
     `ex`="",
     `attached_info`=""
-WHERE `owner_user_id` = "123"
-  AND `friend_user_id` = "456"
+where `owner_user_id`="123"
+    and `friend_user_id`="456"
 ```
 
 - getAllFriendList
@@ -119,6 +115,31 @@ WHERE `owner_user_id` = "123"
 SELECT *
 FROM `local_friends`
 WHERE owner_user_id = "3433303585"
+```
+
+- getPageFriendList
+
+| 输入参数   | 类型  | 说明  | 备注     |
+|--------|-----|-----|--------|
+| offset | int |     | 跳过数据行数 |
+| count  | int |     | 取出数据数量 |
+|ownerUserID    | string |     |     |
+
+**无输入参数**
+
+| 返回参数    | 类型     | 说明             | 备注  |
+|---------|--------|----------------|-----|
+| errCode | number | 自定义即可，0成功，非0失败 |     |
+| errMsg  | string | 详细的err信息       |     |
+| data    | string | []LocalFriend  （表对象数据） |对象转换成string|
+
+```sqlite
+SELECT *
+FROM `local_friends`
+WHERE owner_user_id = "3433303585"
+ORDER BY name
+LIMIT 5
+offset 10
 ```
 
 - searchFriendList
@@ -152,11 +173,11 @@ ORDER BY create_time DESC
 | friendUserID      | string |     |     |
 | ownerUserID | string | | |
 
-| 返回参数    | 类型     | 说明             | 备注  |
-|---------|--------|----------------|-----|
-| errCode | number | 自定义即可，0成功，非0失败 |     |
-| errMsg  | string | 详细的err信息       |     |
-| data    | string | LocalGroup  （表对象数据） |对象转换成string|
+| 返回参数    | 类型     | 说明                   | 备注  |
+|---------|--------|----------------------|-----|
+| errCode | number | 自定义即可，0成功，非0失败       |     |
+| errMsg  | string | 详细的err信息             |     |
+| data    | string | LocalFriend  （表对象数据） |对象转换成string|
 
 ```sqlite
 SELECT *

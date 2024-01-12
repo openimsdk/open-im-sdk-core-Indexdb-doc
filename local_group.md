@@ -9,26 +9,27 @@
 - 表名：local_groups
 
 ```sqlite
-CREATE TABLE local_groups
+CREATE TABLE `local_groups`
 (
-    group_id                 varchar(64) PRIMARY KEY,
-    name                     TEXT,
-    notification             varchar(255),
-    introduction             varchar(255),
-    face_url                 varchar(255),
-    create_time              INTEGER,
-    status                   INTEGER,
-    creator_user_id          varchar(64),
-    group_type               INTEGER,
-    owner_user_id            varchar(64),
-    member_count             INTEGER,
-    ex                       varchar(1024),
-    attached_info            varchar(1024),
-    need_verification        INTEGER,
-    look_member_info         INTEGER,
-    apply_member_friend      INTEGER,
-    notification_update_time INTEGER,
-    notification_user_id     TEXT
+    `group_id`                 varchar(64),
+    `name`                     text,
+    `notification`             varchar(255),
+    `introduction`             varchar(255),
+    `face_url`                 varchar(255),
+    `create_time`              integer,
+    `status`                   integer,
+    `creator_user_id`          varchar(64),
+    `group_type`               integer,
+    `owner_user_id`            varchar(64),
+    `member_count`             integer,
+    `ex`                       varchar(1024),
+    `attached_info`            varchar(1024),
+    `need_verification`        integer,
+    `look_member_info`         integer,
+    `apply_member_friend`      integer,
+    `notification_update_time` integer,
+    `notification_user_id`     text,
+    PRIMARY KEY (`group_id`)
 )
 ```
 
@@ -38,7 +39,7 @@ CREATE TABLE local_groups
 
 | 输入参数     | 类型     | 说明 | 备注       |
 | --------- |--------| ----- |----------|
-|LocalGroup   | string | （表对象数据） |对象转换成string|
+|LocalGroup   | string | （LocalGroup 表对象数据） |对象转换成string|
 
 | 返回参数     | 类型            | 说明 | 备注  |
 | --------- | ------------ | ----- |-----|
@@ -55,6 +56,8 @@ INSERT INTO `local_groups` (`group_id`, `name`, `notification`, `introduction`, 
 VALUES ("1234567", "测试1234", "", "", "", 1666777417, 0, "", 0, "", 0, "", "", 0, 0, 0, 0, "")
 ```
 
+
+
 - deleteGroup
 
 | 输入参数     | 类型     | 说明  | 备注  |
@@ -67,17 +70,16 @@ VALUES ("1234567", "测试1234", "", "", "", 1666777417, 0, "", 0, "", 0, "", ""
 | errMsg     | string     | 详细的err信息 |     |
 
 ```sqlite
-DELETE
-FROM `local_conversation_unread_messages`
-WHERE conversation_id = "super_group_748402675"
-  and send_time <= 0
+DELETE FROM `local_groups` WHERE `group_id` = '1728503199';
 ```
+
+
 
 - updateGroup
 
 | 输入参数     | 类型     | 说明 | 备注       |
 | --------- |--------| ----- |----------|
-|LocalGroup  | string |（表对象数据） |对象转换成string|
+|LocalGroup  | string |（LocalGroup 表对象数据） |对象转换成string|
 
 | 返回参数     | 类型            | 说明 | 备注  |
 | --------- | ------------ | ----- |-----|
@@ -107,7 +109,9 @@ SET `group_id`="1234567",
 WHERE `group_id` = "1234567"
 ```
 
-- getJoinedGroupList
+
+
+- getJoinedGroupListDB
 
 **无输入参数**
 
@@ -118,9 +122,10 @@ WHERE `group_id` = "1234567"
 | data    | string | []LocalGroup  （表对象数据） |对象转换成string|
 
 ```sqlite
-SELECT *
-FROM `local_groups`
+SELECT * FROM `local_groups`
 ```
+
+
 
 - getGroupInfoByGroupID
 
@@ -135,10 +140,10 @@ FROM `local_groups`
 | data    | string | LocalGroup   （表对象数据） |对象转换成string|
 
 ```sqlite
-SELECT *
-FROM `local_group_members`
-WHERE group_id = "748402675"
+SELECT * FROM `local_groups` WHERE group_id = "1728503199"
 ```
+
+
 
 - getAllGroupInfoByGroupIDOrGroupName
 
@@ -180,21 +185,56 @@ ORDER BY create_time DESC
 ```sql
 UPDATE `local_groups` SET `member_count`=member_count-1 WHERE `group_id` = "groupID"
 ```
- 
- 
+
+
+
+
  - addMemberCount
- 
+
  | 输入参数     | 类型                                                         | 说明 |备注|
  | --------- | ------------------------------------------------------------ | ----- |-----------------------|
  | groupID | string | |
- 
- 
+
+
  | 返回参数     | 类型                                                         | 说明 |备注|
  | --------- | ------------------------------------------------------------ | ----- |-----------------------|
  | errCode      | number                                         | 自定义即可，0成功，非0失败 ||
  | errMsg     | string                                          | 详细的err信息 |
  | data      | number                                          |  |
- 
+
  ```sql
- UPDATE `local_groups` SET `member_count`=member_count+1 WHERE `group_id` = "s"
+ UPDATE `local_groups` SET `member_count`= member_count+1 WHERE `group_id` = "1728503199"
  ```
+
+
+
++ getGroupMemberAllGroupIDs
+
+
+| 返回参数 | 类型   | 说明                       | 备注             |
+| -------- | ------ | -------------------------- | ---------------- |
+| errCode  | number | 自定义即可，0成功，非0失败 |                  |
+| errMsg   | string | 详细的err信息              |                  |
+| data     | string | []string                   | 对象转换成string |
+
+```sqlite
+SELECT DISTINCT group_id FROM local_group_members
+```
+
+
+
++ getGroups
+
+ | 输入参数     | 类型                                                         | 说明 |备注|
+ | --------- | ------------------------------------------------------------ | ----- |-----------------------|
+ | groupIDs | []string | |
+
+| 返回参数 | 类型   | 说明                       | 备注             |
+| -------- | ------ | -------------------------- | ---------------- |
+| errCode  | number | 自定义即可，0成功，非0失败 |                  |
+| errMsg   | string | 详细的err信息              |                  |
+| data     | string | []string                   | 对象转换成string |
+
+```sqlite
+SELECT * FROM local_groups where group_id in ("id1", "id2");
+```
