@@ -28,7 +28,8 @@ CREATE TABLE local_groups
     look_member_info         INTEGER,
     apply_member_friend      INTEGER,
     notification_update_time INTEGER,
-    notification_user_id     TEXT
+    notification_user_id     TEXT,
+    display_is_read          BOOLEAN
 )
 ```
 
@@ -51,8 +52,8 @@ CREATE TABLE local_groups
 INSERT INTO `local_groups` (`group_id`, `name`, `notification`, `introduction`, `face_url`, `create_time`, `status`,
                             `creator_user_id`, `group_type`, `owner_user_id`, `member_count`, `ex`, `attached_info`,
                             `need_verification`, `look_member_info`, `apply_member_friend`, `notification_update_time`,
-                            `notification_user_id`)
-VALUES ("1234567", "测试1234", "", "", "", 1666777417, 0, "", 0, "", 0, "", "", 0, 0, 0, 0, "")
+                            `notification_user_id`, `display_is_read`)
+VALUES ("1234567", "测试1234", "", "", "", 1666777417, 0, "", 0, "", 0, "", "", 0, 0, 0, 0, "", TRUE)
 ```
 
 - deleteGroup
@@ -103,7 +104,8 @@ SET `group_id`="1234567",
     `look_member_info`=0,
     `apply_member_friend`=0,
     `notification_update_time`=0,
-    `notification_user_id`=""
+    `notification_user_id`="",
+    `display_is_read`=FALSE,
 WHERE `group_id` = "1234567"
 ```
 
