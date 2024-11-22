@@ -107,6 +107,7 @@ SELECT * FROM `chat_logs_si_7788_7789`  ORDER BY send_time DESC LIMIT 30;
 ```
 
 
+
 - getMessageBySeq
 
 | 输入参数 | 类型   | 说明     | 备注 |
@@ -126,7 +127,24 @@ SELECT * FROM `chat_logs_si_7788_7789`  ORDER BY send_time DESC LIMIT 30;
 SELECT * FROM `chat_logs_si_7788_7789` WHERE seq = 1000 LIMIT 1;
 ```
 
+- getMessageByUserID
 
+| 输入参数           | 类型     | 说明    | 备注 |
+|----------------|--------|-------| ---- |
+| conversationID | string | 会话 ID |      |
+| userID         | string | 用户ID  |      |
+
+| 返回参数 | 类型   | 说明                           | 备注                           |
+| -------- | ------ | ------------------------------ | ------------------------------ |
+| errCode  | number | 自定义即可，0成功，非0失败     | 如果获取不到消息也需要返回错误 |
+| errMsg   | string | 详细的err信息                  |                                |
+| data     | string | []LocalChatLog（消息表对象数组数据）| 对象转换成string               |
+
+参考 SQL 语句说明：
+
+```sql
+SELECT * FROM `chat_logs_si_7788_7789` WHERE user_id = "1552662" LIMIT 1;
+```
 
 - getMessagesByClientMsgIDs
 

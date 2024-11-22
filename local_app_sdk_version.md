@@ -11,7 +11,9 @@
 ```sqlite
 CREATE TABLE `local_app_sdk_version` (
 	`version` varchar(255),
-	PRIMARY KEY (`version`))
+	`installed` numeric,
+	PRIMARY KEY (`version`)
+)
 ```
 
 #### 接口说明：
