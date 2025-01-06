@@ -1040,3 +1040,26 @@ ORDER BY `send_time` DESC
 LIMIT 1;
 
 ```
+
+- getLatestValidServerMessage
+>>获取有效的带seq的消息，用于内部消息块之间断层检测
+> 
+| 输入参数           | 类型                                                         | 说明                  | 备注                                                                                                                                             |
+|----------------| ------------------------------------------------------------ |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| conversationID | string  | 会话ID                |
+| startTime | number | 消息发送时间，毫秒 ||
+| isReverse      | boolean | 消息为正向拉取还是反向拉取       | isReverse为true send_time < startTime,order by 后面的排序规则为send_time DESC 降序排列，当为false的情况，order by 后面的排序规则为send_time send_time > startTime ASC 升序排列 |
+
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode  | number | 自定义即可，0成功，非0失败     | 如果获取不到消息也需要返回错误 |
+| errMsg     | string                                          | 详细的err信息 ||
+| data     | string | LocalChatLog（消息表对象数据） | 对象转换成string               |
+
+**参考sql语句说明：**
+
+```sql
+SELECT * FROM `chat_logs_sg_93606743` WHERE send_time < 1710774468519 AND seq != 0 ORDER BY send_time DESC LIMIT 1
+
+```
