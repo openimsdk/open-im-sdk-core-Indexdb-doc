@@ -84,12 +84,14 @@ SELECT seq FROM `chat_logs_si_7788_7789` WHERE seq IN (1,2,3,4);
 
 - getMessageList
 
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| conversationID | string | 会话 ID                    |      |
-| count | number | 获取消息的数量 ||
-| startTime | number | 消息发送时间，毫秒 ||
-| isReverse | boolean | 消息为正向拉取还是反向拉取|默认情况为false，即为正向拉取（从新消息到老消息），order by 后面的排序规则为send_time DESC 降序排列，send_time为 <;当为true的情况，即为反向拉取，order by 后面的排序规则为send_time ASC 升序排列,send_time为 >|
+| 输入参数     | 类型     | 说明         | 备注                                                                                                                                                            |
+| --------- |--------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| conversationID | string | 会话 ID      |                                                                                                                                                               |
+| count | number | 获取消息的数量    ||
+| startTime | number | 消息发送时间，毫秒  ||
+| startClientMsgID | string | 起始消息的msgID ||
+
+| isReverse | boolean | 消息为正向拉取还是反向拉取| 默认情况为false，即为正向拉取（从新消息到老消息），order by 后面的排序规则为send_time DESC,seq DESC 降序排列，send_time为 <=;当为true的情况，即为反向拉取，order by 后面的排序规则为send_time ASC,seq ASC 升序排列,send_time为 >= |
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -101,7 +103,7 @@ SELECT seq FROM `chat_logs_si_7788_7789` WHERE seq IN (1,2,3,4);
 
 ```sql
 #如果startTime>0
-SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time < 1664357584025 ORDER BY send_time DESC LIMIT 30;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE send_time <= 1664357584025 and client_msg_id != cb75fb34f166dae6f8c20a641a8f4d5b ORDER BY send_time DESC,seq DESC LIMIT 30;
 #否则
 SELECT * FROM `chat_logs_si_7788_7789`  ORDER BY send_time DESC LIMIT 30;
 ```
