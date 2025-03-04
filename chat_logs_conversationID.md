@@ -574,11 +574,11 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE client_msg_id IN ("a43fe26849cf4f92
 
 - updateMsgSenderNickname（暂未使用）
 
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| 输入参数     | 类型                                                         | 说明 | 备注  |
+| --------- | ------------------------------------------------------------ | ----- |-----|
 | sendID                                     | string  |  |
 | nickname | string |  |
-| sType | int | sessionType
+| sType | int | sessionType|     |
 
 
 | 返回参数     | 类型                                                         | 说明 |备注|
@@ -594,11 +594,11 @@ UPDATE `chat_logs_si_7788_7789` SET `sender_nick_name`="xx" WHERE send_id = "ss"
 
 - updateMsgSenderFaceURL（暂未使用）
 
-| 输入参数     | 类型                                                         | 说明 |备注|
-| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| 输入参数     | 类型                                                         | 说明 | 备注  |
+| --------- | ------------------------------------------------------------ | ----- |-----|
 | sendID                                     | string  |  |
 | faceURL | string |  |
-| sType | int | sessionType
+| sType | int | sessionType|     |
 
 
 | 返回参数     | 类型                                                         | 说明 |备注|
@@ -785,7 +785,7 @@ UPDATE `chat_logs_si_7788_7789` SET `status` = 2 WHERE (1 = 1) AND (`conversatio
 + getUnreadMessage
 
 | 输入参数           | 类型   | 说明 | 备注 |
-|----------------| ------ |--| ---- |
+|----------------| ------ |-----------------------| ---- |
 | conversationID | string | 会话ID |      |
 | loginUserID        | string | 用户ID |      |
 
@@ -807,7 +807,7 @@ select * from chat_logs_si_7788_7789 where send_id  != "7788" And is_read = 0;
 + markConversationMessageAsReadBySeqs
 
 | 输入参数           | 类型   | 说明 | 备注 |
-|----------------| ------ |--| ---- |
+|----------------| ------ |-----------------------| ---- |
 | conversationID | string | 会话ID |      |
 | seqs  | string | 整型数组转换后的string |      |
 | loginUserID        | string | 用户ID |      |
@@ -826,15 +826,37 @@ UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE `seq` IN (1,2) And send_id
 ```
 
 
++ deleteMessagesByClientMsgIDs
+
+
+| 输入参数           | 类型   | 说明              | 备注 |
+|----------------| ------ |-----------------| ---- |
+| conversationID | string | 会话ID            |      |
+| msgIDs  | string | 字符串数组转换后的string |      |
+
+
+
+| 返回参数    | 类型     | 说明                | 备注           |
+|---------|--------|-------------------|--------------|
+| errCode | number | 自定义即可，0成功，非0失败    |  |
+| errMsg  | string | 详细的err信息          |              |
+| data    | number | 更新影响的行数 |              |
+
+**参考sql语句说明：**
+
+```
+UPDATE `chat_logs_si_7788_7789` SET `status`=4 WHERE `client_msg_id` IN ("34343434","234234324234");
+```
+
 
 
 + markConversationMessageAsReadDB
 
-| 输入参数           | 类型   | 说明 | 备注 |
-|----------------| ------ |--| ---- |
-| conversationID | string | 会话ID |      |
-| msgIDs  | string | 消息ID字符串数组转换后的string |      |
-| loginUserID        | string | 用户ID |      |
+| 输入参数           | 类型   | 说明                    | 备注 |
+|----------------| ------ |-----------------------| ---- |
+| conversationID | string | 会话ID                  |      |
+| msgIDs  | string | 消息ID字符串数组转换后的string   |      |
+| loginUserID        | string | 用户ID                  |      |
 
 
 | 返回参数    | 类型     | 说明                | 备注           |
@@ -854,7 +876,7 @@ UPDATE `chat_logs_si_7788_7789` SET `is_read`=1 WHERE `client_msg_id` IN ("34343
 + updateColumnsMessage
 
 | 输入参数           | 类型   | 说明 | 备注 |
-|----------------| ------ |--| ---- |
+|----------------| ------ |-----------------------| ---- |
 | conversationID | string | 会话ID |      |
 | clientMsgID  | string | 消息ID |      |
 | args        | string | map转换成的string |      |
@@ -962,7 +984,7 @@ UPDATE `chat_logs_si_7788_7789` SET `status`=4, WHERE session_type=1 AND (send_i
 + MarkConversationAllMessageAsRead
 
 | 输入参数           | 类型   | 说明 | 备注 |
-|----------------| ------ |--| ---- |
+|----------------| ------ |-----------------------| ---- |
 | conversationID | string | 会话ID |      |
 | loginUserID        | string | 用户ID |      |
 
