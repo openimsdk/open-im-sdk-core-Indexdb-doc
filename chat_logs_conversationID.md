@@ -31,6 +31,7 @@ CREATE TABLE `chat_logs_si_7788_7789` (
   `is_react` tinyint(1),
   `is_external_extensions` tinyint(1),
   `msg_first_modify_time` int,
+  `dst_user_ids` text,
   PRIMARY KEY (`client_msg_id`)
 );
 ```
