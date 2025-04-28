@@ -69,6 +69,23 @@ INSERT INTO `local_group_requests` (`group_id`,`group_name`,`notification`,`intr
 DELETE FROM `local_group_requests` WHERE group_id="x" and user_id="user"
 ```
 
+- deleteGroupRequest
+
+| 输入参数     | 类型       | 说明 |备注|
+|----------|----------| ----- |-----------------------|
+| groupIDs | []string |   ||
+| userID   | string   |   ||
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败||
+| errMsg     | string                                          | 详细的err信息 ||
+
+**参考sql语句说明：**
+```sql
+DELETE FROM `local_group_requests` WHERE group_id in ("1", "2") and user_id="user"
+```
+
 
 
 - updateGroupRequest
@@ -180,6 +197,22 @@ INSERT INTO `local_admin_group_requests` (`group_id`,`group_name`,`notification`
 DELETE FROM `local_admin_group_requests` WHERE group_id="x" and user_id="user"
 ```
 
+- deleteAdminGroupRequestsFromGroupID
+
+| 输入参数    | 类型       | 说明 |备注|
+|---------|----------| ----- |-----------------------|
+| groupID | string   |   ||
+| userIDs | []string |   ||
+
+| 返回参数     | 类型                                                         | 说明 |备注|
+| --------- | ------------------------------------------------------------ | ----- |-----------------------|
+| errCode      | number                                         | 自定义即可，0成功，非0失败|没更新上报错|
+| errMsg     | string                                          | 详细的err信息 ||
+
+**参考sql语句说明：**
+```sql
+DELETE FROM `local_admin_group_requests` WHERE group_id="x" and user_id in ("1", "2")
+```
 
 
 - updateAdminGroupRequest

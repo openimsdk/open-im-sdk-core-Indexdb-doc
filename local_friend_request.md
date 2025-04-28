@@ -73,6 +73,27 @@ WHERE from_user_id = "457"
   and to_user_id = "123"
 ```
 
+- deleteSelfFriendRequests
+
+| 输入参数        | 类型       | 说明                         | 备注  |
+|-------------|----------|----------------------------|-----|
+| userID      | string   | 用户自身id，可作为申请者和接收者        |     |
+| fromUserIDs | []string | 申请者userID列表，此时userID会作为接收者 |     |
+| toUserIDs   | []string | 接收者userID列表，此时userID会作为申请者 |     |
+
+| 返回参数     | 类型            | 说明 | 备注  |
+| --------- | ------------ | ----- |-----|
+| errCode      | number   | 自定义即可，0成功，非0失败 |     |
+| errMsg     | string     | 详细的err信息 |     |
+
+```sqlite
+DELETE
+FROM `local_friend_requests`
+WHERE 
+    (from_user_id = "123" AND to_user_id in ("111","222","333")) 
+   OR (from_user_id in ("444","555","666") AND to_user_id = "123")
+```
+
 - updateFriendRequest
 
 | 输入参数     | 类型     | 说明 | 备注       |
