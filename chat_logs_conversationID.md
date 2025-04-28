@@ -148,7 +148,7 @@ SELECT * FROM `chat_logs_si_7788_7789` WHERE seq = 1000 LIMIT 1;
 参考 SQL 语句说明：
 
 ```sql
-SELECT * FROM `chat_logs_si_7788_7789` WHERE user_id = "1552662" LIMIT 1;
+SELECT * FROM `chat_logs_si_7788_7789` WHERE user_id = "1552662";
 ```
 
 - getMessagesByClientMsgIDs
