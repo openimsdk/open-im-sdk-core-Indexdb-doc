@@ -6,7 +6,7 @@
 
 ### 黑名单表
 
-- 表名：local_blacks
+- 表名：
 
 ```sqlite
 create table local_blacks
@@ -31,11 +31,13 @@ create table local_blacks
 
 **无输入参数**
 
-| 返回参数    | 类型     | 说明             | 备注  |
-|---------|--------|----------------|-----|
-| errCode | number | 自定义即可，0成功，非0失败 |     |
-| errMsg  | string | 详细的err信息       |     |
-| data    | string | []LocalBlack  （表对象数据） |对象转换成string|
+| 返回参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| errCode | number | 自定义即可，0成功，非0失败 | |
+| errMsg | string | 详细的err信息 | |
+| data | string | []LocalBlack（表对象数据） |数组对象转换成string|
+
+**参考sql语句说明：**
 
 ```sqlite
 SELECT *
@@ -46,91 +48,127 @@ FROM `local_blacks`
 
 **无输入参数**
 
-| 返回参数    | 类型     | 说明                | 备注  |
-|---------|--------|-------------------|-----|
-| errCode | number | 自定义即可，0成功，非0失败    |     |
-| errMsg  | string | 详细的err信息          |     |
-| data    | string | []string  （表对象数据） |对象转换成string|
+| 返回参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| errCode | number | 自定义即可，0成功，非0失败 | |
+| errMsg | string | 详细的err信息 | |
+| data | string |[]blackListUid | 对象转换成string |
+
+**参考sql语句说明：**
 
 ```sqlite
 SELECT `block_user_id`
 FROM `local_blacks`
 ```
 
-- getBlackInfoList
+- getBlackInfoByBlockUserID
 
-| 输入参数              | 类型       | 说明  | 备注  |
-|-------------------|----------|-----|-----|
-| blockUserIDList      | []string |     |     |
+| 输入参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| blockUserID | string | | |
+| ownerUserID | string | | |
 
-| 返回参数    | 类型     | 说明                    | 备注  |
-|---------|--------|-----------------------|-----|
-| errCode | number | 自定义即可，0成功，非0失败        |     |
-| errMsg  | string | 详细的err信息              |     |
-| data    | string | []LocalGroup  （表对象数据） |对象转换成string|
+| 返回参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| errCode | number | 自定义即可，0成功，非0失败 | |
+| errMsg | string | 详细的err信息 | |
+| data | string | LocalBlack（表对象数据） |对象转换成string|
+
+**参考sql语句说明：**
 
 ```sqlite
 SELECT *
 FROM `local_blacks`
-WHERE block_user_id IN ("123")
+WHERE owner_user_id = "3433303585"
+  AND block_user_id = "456"
+LIMIT 1
+```
+
+- getBlackInfoList
+
+| 输入参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| blockUserIDList | string |[]string | 黑名单userid数组转为String|
+
+| 返回参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| errCode | number | 自定义即可，0成功，非0失败 | |
+| errMsg | string | 详细的err信息 | |
+| data | string | []LocalBlack（表对象数据） |数组对象转换成string|
+
+**参考sql语句说明：**
+
+```sqlite
+SELECT *
+FROM `local_blacks`
+WHERE block_user_id IN ("456")
 ```
 
 - insertBlack
 
-| 输入参数     | 类型     | 说明 | 备注       |
-| --------- |--------| ----- |----------|
-|LocalBlack   | string | （表对象数据） |对象转换成string|
+| 输入参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| LocalBlack | string |（表对象数据） |对象转换成string|
 
-| 返回参数     | 类型            | 说明 | 备注  |
-| --------- | ------------ | ----- |-----|
-| errCode      | number   | 自定义即可，0成功，非0失败 |     |
-| errMsg     | string     | 详细的err信息 |     |
+| 返回参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| errCode | number | 自定义即可，0成功，非0失败 | |
+| errMsg | string | 详细的err信息 | |
 
 **参考sql语句说明：**
 
 ```sqlite
 INSERT INTO `local_blacks` (`owner_user_id`, `block_user_id`, `nickname`, `face_url`, `gender`, `create_time`,
                             `add_source`, `operator_user_id`, `ex`, `attached_info`)
-VALUES ("123", "456", "HELLO", "", 1, 1666779750, 1, "789", "", "")
+VALUES ("123", "456", "hello", "", 1, 1666866302, 1, "789", "asdasdasa", "asdasds")
+```
+
+- updateBlack
+
+| 输入参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| LocalBlack | string |（表对象数据） |对象转换成string|
+
+| 返回参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| errCode | number | 自定义即可，0成功，非0失败 | |
+| errMsg | string | 详细的err信息 | |
+
+**参考sql语句说明：**
+
+```sqlite
+UPDATE `local_blacks`
+SET `nickname`="hello",
+    `gender`=1,
+    `create_time`=1666866338,
+    `add_source`=1,
+    `operator_user_id`="789",
+    `ex`="asdasdasa",
+    `attached_info`="asdasds"
+WHERE `owner_user_id` = "123"
+  AND `block_user_id` = "456"
 ```
 
 - deleteBlack
 
-| 输入参数     | 类型     | 说明  | 备注  |
-| --------- |--------|-----|-----|
-|blockUserID| string |     |     |
+| 输入参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| blockUserID | string | | |
 | ownerUserId | string | |
 
-| 返回参数     | 类型            | 说明 | 备注  |
-| --------- | ------------ | ----- |-----|
-| errCode      | number   | 自定义即可，0成功，非0失败 |     |
-| errMsg     | string     | 详细的err信息 |     |
+| 返回参数 | 类型 | 说明 | 备注 |
+| --------- |--------| ----- |-----|
+| errCode | number | 自定义即可，0成功，非0失败 | |
+| errMsg | string | 详细的err信息 | |
+
+**参考sql语句说明：**
 
 ```sqlite
 DELETE
 FROM `local_blacks`
 WHERE owner_user_id = "3433303585"
-  and block_user_id = "123"
+  and block_user_id = "456"
 ```
 
-- updateBlack
 
-| 输入参数     | 类型     | 说明 | 备注       |
-| --------- |--------| ----- |----------|
-|LocalBlack  | string |（表对象数据） |对象转换成string|
 
-| 返回参数     | 类型            | 说明 | 备注  |
-| --------- | ------------ | ----- |-----|
-| errCode      | number   | 自定义即可，0成功，非0失败 | 获取不到报错 |
-| errMsg     | string     | 详细的err信息 |     |
-
-```sqlite
-UPDATE `local_blacks`
-SET `nickname`="HELLO",
-    `gender`=1,
-    `create_time`=1666779794,
-    `add_source`=1,
-    `operator_user_id`="789"
-WHERE `owner_user_id` = "123"
-  AND `block_user_id` = "456"
-```

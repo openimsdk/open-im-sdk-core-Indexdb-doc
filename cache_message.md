@@ -1,3 +1,8 @@
+# Js实现db接口简要说明(已废弃)
+## 表结构以及需要实现的接口说明
+>所有的db接口返回值，统一由errCode,errMsg,data字段转换为字符串异步返回
+### 消息扩展信息表
+
 **参考sql语句说明：**
 ```sql
 CREATE TABLE "temp_cache_local_chat_logs" (
@@ -40,7 +45,11 @@ CREATE TABLE "temp_cache_local_chat_logs" (
 **参考sql语句说明：**
 
 ```sql
-INSERT INTO `temp_cache_local_chat_logs` (`client_msg_id`,`server_msg_id`,`send_id`,`recv_id`,`sender_platform_id`,`sender_nick_name`,`sender_face_url`,`session_type`,`msg_from`,`content_type`,`content`,`is_read`,`status`,`seq`,`send_time`,`create_time`,`attached_info`,`ex`) VALUES ("1","1","1","1",1,"1","1",1,100,200,"xxx",false,100,0,0,0,"",""),("1","1","1","1",1,"1","1",1,100,200,"xxx",false,100,0,0,0,"","")
+INSERT INTO `temp_cache_local_chat_logs` 
+(`client_msg_id`, `server_msg_id`, `send_id`, `recv_id`, `sender_platform_id`, `sender_nick_name`, `sender_face_url`, `session_type`, `msg_from`, `content_type`, `content`, `is_read`, `status`, `seq`, `send_time`, `create_time`, `attached_info`, `ex`) 
+VALUES 
+("1", "1", "1", "1", 1, "1", "1", 1, 100, 200, "xxx", false, 100, 0, 0, 0, "", ""), 
+("1", "1", "1", "1", 1, "1", "1", 1, 100, 200, "xxx", false, 100, 0, 0, 0, "", "");
 ```
 
 - InsertTempCacheMessage
@@ -54,7 +63,7 @@ INSERT INTO `temp_cache_local_chat_logs` (`client_msg_id`,`server_msg_id`,`send_
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
 | errCode      | number                                         | 自定义即可，0成功，非0失败| 失败报错|
 | errMsg     | string                                          | 详细的err信息 ||
-| data      | string                                          | 可为""  ||
+| data      | string                                          | 可为" " ||
 
 **参考sql语句说明：**
 

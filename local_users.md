@@ -4,7 +4,18 @@
 ### 用户表
 - 表名：local_users
 ```sqlite
-CREATE TABLE `local_users` (`user_id` varchar(64),`name` varchar(255),`face_url` varchar(255),`gender` integer,`phone_number` varchar(32),`birth` integer,`email` varchar(64),`create_time` integer,`app_manger_level` integer,`ex` varchar(1024),`attached_info` varchar(1024),`global_recv_msg_opt` integer,PRIMARY KEY (`user_id`))
+CREATE TABLE `local_users`
+(
+    `user_id`             varchar(64),
+    `name`                varchar(255),
+    `face_url`            varchar(255),
+    `create_time`         integer,
+    `app_manger_level`    integer,
+    `ex`                  varchar(1024),
+    `attached_info`       varchar(1024),
+    `global_recv_msg_opt` integer,
+    PRIMARY KEY (`user_id`)
+)
 ```
 
 #### 接口说明：
@@ -25,11 +36,13 @@ CREATE TABLE `local_users` (`user_id` varchar(64),`name` varchar(255),`face_url`
 ```sql
 SELECT * FROM `local_users` WHERE user_id = "3045326383"  LIMIT 1;
 ```
+
+
 - insertLoginUser
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| user                                               | string  |LocalUser（用户表对象数据）|对象转换成string
+| user                                               | string  |LocalUser（用户表对象数据）|对象转换成string|
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -39,15 +52,16 @@ SELECT * FROM `local_users` WHERE user_id = "3045326383"  LIMIT 1;
 **参考sql语句说明：**
 
 ```sql
-INSERT INTO `local_users` (`user_id`,`name`,`face_url`,`gender`,`phone_number`,`birth`,`email`,`create_time`,`app_manger_level`,`ex`,`attached_info`,`global_recv_msg_opt`) VALUES ("3045326383","Gordon","ic_avatar_01",0,"18349115126",0," ",0,1,"","",0)
-
+INSERT INTO `local_users` (`user_id`, `name`, `face_url`, `create_time`, `app_manger_level`, `ex`, `attached_info`, `global_recv_msg_opt`) 
+VALUES ('example_user', 'bantanger', 'http://example.com/face.jpg', 1618906879, 18, 'example', 'info', 1);
 ```
-- updateLoginUserByMap
+
+
+- updateLoginUser
 
 | 输入参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
-| userID     |string                                       |  用户ID ||
-| args     |object                                       |  更新字段参数对象 |内部是kv，k为字段名，v为需要更新的字段内容|
+| user     | string | LocalUser（用户表对象数据） | 对象转换成 string<br />没有变化的字段不传入即可 |
 
 | 返回参数     | 类型                                                         | 说明 |备注|
 | --------- | ------------------------------------------------------------ | ----- |-----------------------|
@@ -57,6 +71,9 @@ INSERT INTO `local_users` (`user_id`,`name`,`face_url`,`gender`,`phone_number`,`
 **参考sql语句说明：**
 
 ```sql
-UPDATE `local_users` SET `app_manger_level`=1,`attached_info`="",`birth`=0,`create_time`=0,`email`=" ",`ex`="",`face_url`="ic_avatar_01",`gender`=0,`global_recv_msg_opt`=0,`name`="Gordon111",`phone_number`="18349115126" WHERE `user_id` = "3045326383";
+UPDATE `local_users` SET `name`="test",`app_manger_level` = 18 WHERE `user_id` = "7204255074"
 ```
 
+
+
++ updateLoginUserByMap（暂时废弃）
