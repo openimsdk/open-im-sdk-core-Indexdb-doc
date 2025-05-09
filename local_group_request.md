@@ -69,7 +69,7 @@ INSERT INTO `local_group_requests` (`group_id`,`group_name`,`notification`,`intr
 DELETE FROM `local_group_requests` WHERE group_id="x" and user_id="user"
 ```
 
-- deleteGroupRequest
+- deleteGroupRequestsFromUserID
 
 | 输入参数     | 类型       | 说明 |备注|
 |----------|----------| ----- |-----------------------|
@@ -85,7 +85,6 @@ DELETE FROM `local_group_requests` WHERE group_id="x" and user_id="user"
 ```sql
 DELETE FROM `local_group_requests` WHERE group_id in ("1", "2") and user_id="user"
 ```
-
 
 
 - updateGroupRequest
@@ -104,8 +103,6 @@ DELETE FROM `local_group_requests` WHERE group_id in ("1", "2") and user_id="use
  UPDATE `local_group_requests` SET `group_id`="x",`group_name`="x",`notification`="x",`introduction`="x",`face_url`="x",`create_time`=123123123,`status`=1,`creator_user_id`="x",`group_type`=0,`owner_user_id`="",`member_count`=0,`user_id`="123",`nickname`="123",`user_face_url`="132",`handle_result`=0,`req_msg`="123",`handle_msg`="213",`req_time`=0,`handle_user_id`="",`handle_time`=0,`ex`="",`attached_info`="",`join_source`=0,`inviter_user_id`="" WHERE `group_id` = "x" AND `user_id` = "123"
 ```
 
-
-
 - getSendGroupApplication
 
 | 输入参数     | 类型                                                         | 说明 |备注|
@@ -121,8 +118,6 @@ DELETE FROM `local_group_requests` WHERE group_id in ("1", "2") and user_id="use
 ```sql
 SELECT * FROM `local_group_requests` ORDER BY create_time DESC
 ```
-
-
 
 
 
